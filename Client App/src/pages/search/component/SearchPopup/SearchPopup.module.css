@@ -1,0 +1,61 @@
+.form {
+  padding: 1rem;
+  background-color: #febb02;
+  border-radius: 10px;
+}
+
+.text {
+  color: #6a6246;
+}
+
+.non-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 1rem;
+}
+
+.input {
+  height: 2rem;
+  width: 15rem;
+  padding-left: 0.2rem;
+}
+
+.input::placeholder {
+  color: black;
+  font-size: medium;
+  font-weight: 500;
+}
+
+.option-container {
+  padding-top: 1rem;
+}
+
+.option-content {
+  padding: 1rem 0 2rem 0;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+}
+
+.option-input {
+  height: 1.5rem;
+  width: 4rem;
+  padding-left: 0.2rem;
+}
+
+.btn {
+  background-color: #0071c2;
+  height: 2.5rem;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}

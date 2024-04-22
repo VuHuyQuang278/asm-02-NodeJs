@@ -1,0 +1,15 @@
+.header {
+  padding: 1.5rem 0 1.5rem 0;
+}
+
+.text {
+  margin: 1.5rem 0px;
+}
+
+.btn-register {
+  margin: 2rem 0px 0.5rem 0px;
+  width: max-content;
+  padding: 0.5rem;
+  background-color: #0071c2;
+  cursor: pointer;
+}

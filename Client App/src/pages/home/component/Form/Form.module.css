@@ -1,0 +1,50 @@
+.form-container {
+  background-color: #003580;
+  color: #fff;
+  padding: 2rem 0 3rem 0;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.container {
+  width: 30%;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: xx-large;
+  font-weight: 700;
+  padding: 3rem 0 2rem 0;
+  text-align: center;
+}
+
+.text {
+  text-align: center;
+  padding-bottom: 2rem;
+}
+
+.form-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-input {
+  height: 3rem;
+  width: 75%;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.btn {
+  height: 3rem;
+  cursor: pointer;
+  color: #fff;
+  background-color: #0071c2;
+  text-align: center;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+}

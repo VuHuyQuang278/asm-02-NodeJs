@@ -1,0 +1,59 @@
+.description-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 80%;
+  margin: 0 auto 2rem auto;
+}
+
+.description-content {
+  flex: 0 0 880px;
+}
+
+.title {
+  font-size: x-large;
+  font-weight: 700;
+  padding-bottom: 1rem;
+}
+
+.description {
+  text-align: left;
+}
+
+.price {
+  padding: 1.5rem 1rem;
+  background-color: #ebf3ff;
+}
+
+.price-title {
+  color: #6a6246;
+  padding-bottom: 2rem;
+}
+
+.rate-text {
+  text-align: left;
+  padding-bottom: 2rem;
+}
+
+.price-nine {
+  font-size: x-large;
+  padding-bottom: 2rem;
+}
+
+.number {
+  font-weight: bolder;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+  font-weight: 600;
+  color: #fff;
+  background-color: #0071c2;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}

@@ -1,0 +1,50 @@
+.hotel-container {
+  width: 80%;
+  margin: auto;
+  padding-bottom: 4rem;
+}
+
+.title {
+  padding-bottom: 2rem;
+}
+
+.hotel-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.image-hotel {
+  height: 275px;
+  width: 275px;
+}
+
+.hotel-name {
+  color: #5a2ca3;
+  font-size: medium;
+  font-weight: 700;
+  text-decoration: underline;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.city {
+  color: #5b5b60;
+  padding-bottom: 0.5rem;
+  font-size: medium;
+}
+
+.price {
+  font-size: medium;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+}
+
+.rate {
+  padding: 0.2rem;
+  background-color: #003580;
+  color: #fff;
+  font-weight: 600;
+  font-size: medium;
+}

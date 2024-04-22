@@ -1,0 +1,24 @@
+* {
+  margin: 0px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.home-container {
+  position: relative;
+}
+
+.home {
+  background-color: #003580;
+  color: #fff;
+}
+
+.body {
+  position: relative;
+  z-index: -1;
+}
+
+.header-container {
+  width: 80%;
+  margin: auto;
+}

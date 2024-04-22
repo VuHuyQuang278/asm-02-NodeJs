@@ -1,0 +1,105 @@
+.list-item-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 1rem;
+  border: 1px solid #acadc2;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+}
+
+.img {
+  height: 225px;
+  width: 225px;
+}
+
+.hotel-props {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.title {
+  font-size: x-large;
+  font-weight: 700;
+  color: #0072c8;
+  margin-bottom: 0.5rem;
+}
+
+.tag {
+  display: inline-block;
+  margin: 0.5rem 0;
+  padding: 0.2rem;
+  background-color: #008009;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.description {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.type {
+  margin-bottom: 0.5rem;
+}
+
+.cancel {
+  color: #008009;
+}
+
+.hide {
+  display: none;
+}
+
+.free-cancel {
+  font-size: 700;
+  margin-bottom: 0.5rem;
+}
+
+.rate-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+
+.rate-text {
+  font-size: larger;
+  font-weight: 600;
+}
+
+.rate {
+  display: inline-block;
+  padding: 0.3rem;
+  background-color: #003580;
+  color: #fff;
+}
+
+.price {
+  text-align: end;
+  font-size: xx-large;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.info {
+  color: #acadc2;
+  text-align: end;
+  margin-bottom: 0.5rem;
+}
+
+.btn {
+  display: flex;
+  width: 100%;
+  height: 2.5rem;
+  background-color: #0072c8;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+}

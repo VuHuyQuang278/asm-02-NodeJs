@@ -1,0 +1,32 @@
+.type-hotel-container {
+  width: 80%;
+  margin: auto;
+  padding-bottom: 4rem;
+}
+
+.title {
+  padding-bottom: 2rem;
+}
+
+.type-hotel-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.image-type-hotel {
+  height: 200px;
+  width: 200px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.text {
+  color: #5b5b60;
+}
+
+.type-name {
+  font-size: larger;
+  font-weight: 700;
+}

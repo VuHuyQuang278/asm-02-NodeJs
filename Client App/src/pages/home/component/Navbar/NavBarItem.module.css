@@ -1,0 +1,13 @@
+.nav-item {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.active {
+  border: 1px solid #ffffff;
+}

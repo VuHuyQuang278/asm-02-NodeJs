@@ -1,0 +1,17 @@
+.footer-container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  color: #003580;
+  font-weight: 500;
+  padding: 1rem 0 3rem 0;
+}
+
+.col-data {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
