@@ -4,7 +4,7 @@ import style from "./SearchListItem.module.css";
 const SearchListItem = (props) => {
   return (
     <div className={style["list-item-container"]}>
-      <img src={props.image_url} alt="Hotel image" className={style.img} />
+      <img src={props.image_url} alt="Hotel" className={style.img} />
       <div className={style["hotel-props"]}>
         <div>
           <h3 className={style.title}>{props.name}</h3>

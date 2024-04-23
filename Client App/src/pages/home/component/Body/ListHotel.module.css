@@ -18,6 +18,7 @@
 .image-hotel {
   height: 275px;
   width: 275px;
+  cursor: pointer;
 }
 
 .hotel-name {

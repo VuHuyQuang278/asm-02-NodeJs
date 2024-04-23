@@ -13,7 +13,7 @@ const NavBar = () => {
       <div className={style.header}>
         <h1 className={style.title}>Booking Website</h1>
         <div className={style["button-container"]}>
-          <div className={style.button}>Register</div>
+          <div className={style.button}>Sign Up</div>
           <div className={style.button}>Login</div>
         </div>
       </div>

@@ -5,11 +5,11 @@ import ListHotel from "./ListHotel";
 
 const Body = () => {
   return (
-    <div>
+    <>
       <ListCity />
       <HotelType />
       <ListHotel />
-    </div>
+    </>
   );
 };
 

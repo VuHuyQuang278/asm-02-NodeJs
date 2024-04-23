@@ -6,19 +6,25 @@
 
 .home-container {
   position: relative;
+  pointer-events: auto;
 }
 
 .home {
   background-color: #003580;
   color: #fff;
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
 }
 
 .body {
   position: relative;
-  z-index: -1;
+  z-index: 0;
+  pointer-events: auto;
 }
 
 .header-container {
   width: 80%;
   margin: auto;
+  pointer-events: auto;
 }

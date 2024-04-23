@@ -3,12 +3,13 @@ import style from "./ListHotel.module.css";
 // Lấy dữ liệu từ file json
 import data from "../../data/hotel_list.json";
 
+import { useNavigate } from "react-router-dom";
+
 const ListHotel = () => {
-  // Hàm xử lý sự kiện click vào tên khách sạn
-  const onClickHandler = (e) => {
+  const navigate = useNavigate();
+  const handleOnClick = (e) => {
     e.preventDefault();
-    // Chuyển đến trang Detail
-    window.location.replace("./Detail");
+    navigate("./Detail");
   };
 
   return (
@@ -19,15 +20,13 @@ const ListHotel = () => {
           <div key={i} className={style["img-content"]}>
             <img
               src={item.image_url}
-              alt="Image Hotel"
+              alt="Hotel"
               className={style["image-hotel"]}
+              // Thêm sự kiện click
+              onClick={handleOnClick}
             />
             <div className={style.text}>
-              <p
-                className={style["hotel-name"]}
-                // Thêm sự kiện click
-                onClick={onClickHandler}
-              >
+              <p className={style["hotel-name"]} onClick={handleOnClick}>
                 {item.name}
               </p>
               <p className={style["city"]}>{item.city}</p>

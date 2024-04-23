@@ -5,7 +5,7 @@ const ImgHotel = (props) => {
   return (
     <div className={style["img-container"]}>
       {props.photos.map((item, i) => (
-        <img src={item} alt="Image hotel" key={i} className={style.img} />
+        <img src={item} alt="hotel" key={i} className={style.img} />
       ))}
     </div>
   );

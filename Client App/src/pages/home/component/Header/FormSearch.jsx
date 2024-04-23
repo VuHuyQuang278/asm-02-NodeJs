@@ -1,6 +1,8 @@
 // Nhập useState
 import { useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 // Nhập DateRange từ thư viện react-date-range
 import { DateRange } from "react-date-range";
 
@@ -15,6 +17,8 @@ import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
 
 const FormSearch = () => {
+  const navigate = useNavigate();
+
   // Khởi tạo state
   const [date, setDate] = useState([
     {
@@ -27,9 +31,8 @@ const FormSearch = () => {
 
   // Hàm xử lý sự kiện click vào nút Search
   const handleOnClick = (e) => {
-    e.preventDefault();
     // Chuyển sang trang Search
-    window.location.replace("./Search");
+    navigate("./Search");
   };
 
   return (

@@ -12,7 +12,7 @@ const HotelType = () => {
           <div key={i} className={style["img-content"]}>
             <img
               src={item.image}
-              alt="Image Type Hotel"
+              alt="Type Hotel"
               className={style["image-type-hotel"]}
             />
             <div className={style.text}>
