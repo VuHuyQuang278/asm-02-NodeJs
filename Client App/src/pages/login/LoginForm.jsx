@@ -1,7 +1,14 @@
 import style from "./LoginPage.module.css";
 import useInput from "../../hooks/use-input";
 
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/auth";
+import { useNavigate } from "react-router-dom";
+
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     value: enteredEmail,
     isValid: enteredEmailIsValid,
@@ -20,7 +27,7 @@ const LoginForm = () => {
     reset: resetPasswordInput,
   } = useInput((value) => value.length > 8);
 
-  const formSubmissionHandler = (event) => {
+  const formSubmissionHandler = async (event) => {
     event.preventDefault();
 
     if (!enteredEmailIsValid) {
@@ -31,8 +38,39 @@ const LoginForm = () => {
       return;
     }
 
+    const userData = {
+      email: enteredEmail,
+      password: enteredPassword,
+    };
+
+    const res = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+      mode: "cors",
+    });
+
+    if (res.status === 401) {
+      return;
+    }
+
+    if (!res.ok) throw new Error("Something went wrong!");
+
+    const data = await res.json();
+
+    const user = data.user;
+
+    // Gửi hành động đến redux store
+    dispatch(authActions.ON_LOGIN());
+    dispatch(authActions.setCurrentUser(user));
+
+    // Thông báo đăng nhập thành công
+    alert(data.message);
+
     resetEmailInput();
     resetPasswordInput();
+
+    navigate("/");
   };
 
   return (

@@ -22,3 +22,24 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
+
+// export const action = async ({ request }) => {
+//   const dataForm = await request.formData();
+//   const userData = {
+//     userName: dataForm.get("userName"),
+//     password: dataForm.get("password"),
+//     fullName: dataForm.get("fullName"),
+//     phoneNumber: dataForm.get("phoneNumber"),
+//     email: dataForm.get("email"),
+//   };
+
+//   const res = await fetch("http://localhost:5000/signup", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(userData),
+//     mode: "cors",
+//   });
+
+//   if (!res.ok) throw new Error("Something went wrong!");
+
+// };

@@ -1,7 +1,12 @@
 import style from "./SignupPage.module.css";
 import useInput from "../../hooks/use-input";
+import { Form } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
+  const navigate = useNavigate();
+
   const {
     value: enteredName,
     isValid: enteredNameIsValid,
@@ -49,7 +54,7 @@ const SignupForm = () => {
     reset: resetEmailInput,
   } = useInput((value) => value.includes("@"));
 
-  const formSubmissionHandler = (event) => {
+  const formSubmissionHandler = async (event) => {
     event.preventDefault();
 
     if (!enteredNameIsValid) {
@@ -72,17 +77,42 @@ const SignupForm = () => {
       return;
     }
 
+    const userData = {
+      userName: enteredName,
+      password: enteredPassword,
+      fullName: enteredFullName,
+      phoneNumber: enteredPhone,
+      email: enteredEmail,
+    };
+
+    const res = await fetch("http://localhost:5000/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+      mode: "cors",
+    });
+
+    if (!res.ok) throw new Error("Something went wrong!");
+
     resetNameInput();
     resetPasswordInput();
     resetFullNameInput();
     resetPhoneInput();
     resetEmailInput();
+
+    navigate("/");
   };
 
   return (
-    <form className={style.form} onSubmit={formSubmissionHandler}>
+    <Form
+      action="/signup"
+      method="POST"
+      className={style.form}
+      onSubmit={formSubmissionHandler}
+    >
       <input
         type="text"
+        name="userName"
         className={style.input}
         placeholder="User Name"
         onChange={nameChangedHandler}
@@ -94,6 +124,7 @@ const SignupForm = () => {
       )}
       <input
         type="password"
+        name="password"
         className={style.input}
         placeholder="Password"
         onChange={passwordChangedHandler}
@@ -107,6 +138,7 @@ const SignupForm = () => {
       )}
       <input
         type="text"
+        name="fullName"
         className={style.input}
         placeholder="Full Name"
         onChange={fullNameChangedHandler}
@@ -118,6 +150,7 @@ const SignupForm = () => {
       )}
       <input
         type="text"
+        name="phoneNumber"
         className={style.input}
         placeholder="Phone Number"
         onChange={phoneChangedHandler}
@@ -129,6 +162,7 @@ const SignupForm = () => {
       )}
       <input
         type="email"
+        name="email"
         className={style.input}
         placeholder="Email"
         onChange={emailChangedHandler}
@@ -141,7 +175,7 @@ const SignupForm = () => {
       <button type="submit" className={style.btn}>
         Create Account
       </button>
-    </form>
+    </Form>
   );
 };
 

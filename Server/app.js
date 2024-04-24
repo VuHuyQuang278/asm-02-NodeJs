@@ -10,11 +10,16 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+const hotelRoutes = require("./routes/hotel");
+
+app.use(hotelRoutes);
+
 mongoose
   .connect(
-    "mongodb+srv://quangvhfx22065:7UPuKTJnxLw00hNf@cluster0.nhlidry.mongodb.net/data?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://quangvhfx22065:7UPuKTJnxLw00hNf@cluster0.nhlidry.mongodb.net/hoteldb?retryWrites=true&w=majority&appName=Cluster0"
   )
   .then((result) => {
+    console.log("connected");
     app.listen(5000);
   })
   .catch((err) => {
