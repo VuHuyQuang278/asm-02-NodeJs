@@ -1,21 +1,39 @@
 // Nhập module css
 import style from "./ListCity.module.css";
-// Lấy dữ liệu từ file json
-import ListCitydata from "../../data/city.json";
+import HaNoiImg from "../../../../assets/HaNoi.jpg";
+import HCMImg from "../../../../assets/HCM.jpg";
+import DaNangImg from "../../../../assets/DaNang.jpg";
 
-const ListCity = () => {
+const ListCity = (props) => {
   return (
     <div className={style["listcity-content"]}>
-      {/* Hiển thị danh sách các thành phố */}
-      {ListCitydata.map((item, i) => (
-        <div key={i} className={style["img-content"]}>
-          <img src={item.image} alt="City" className={style["image-city"]} />
-          <div className={style.text}>
-            <p className={style["city-name"]}>{item.name}</p>
-            <p className={style["subtext"]}>{item.subText}</p>
-          </div>
+      <div className={style["img-content"]}>
+        <img src={HaNoiImg} alt="City" className={style["image-city"]} />
+        <div className={style.text}>
+          <p className={style["city-name"]}>Ha Noi</p>
+          <p className={style["subtext"]}>
+            {props.hotelData.hotelsByArea.HaNoi} properties
+          </p>
         </div>
-      ))}
+      </div>
+      <div className={style["img-content"]}>
+        <img src={HCMImg} alt="City" className={style["image-city"]} />
+        <div className={style.text}>
+          <p className={style["city-name"]}>Ho Chi Minh</p>
+          <p className={style["subtext"]}>
+            {props.hotelData.hotelsByArea.HoChiMinh} properties
+          </p>
+        </div>
+      </div>
+      <div className={style["img-content"]}>
+        <img src={DaNangImg} alt="City" className={style["image-city"]} />
+        <div className={style.text}>
+          <p className={style["city-name"]}>Da Nang</p>
+          <p className={style["subtext"]}>
+            {props.hotelData.hotelsByArea.DaNang} properties
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

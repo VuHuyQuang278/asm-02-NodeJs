@@ -1,4 +1,7 @@
 const User = require("../models/user");
+const Hotel = require("../models/hotel");
+const Transaction = require("../models/transaction");
+const Room = require("../models/room");
 
 exports.postSignUp = (req, res, next) => {
   const userName = req.body.userName;
@@ -47,6 +50,7 @@ exports.postLogin = (req, res, next) => {
   User.findOne({ email: email })
     .then((user) => {
       if (user.password === password) {
+        req.user = user;
         return res.status(200).json({
           user: user,
           message: "Logged in successfully",
@@ -58,4 +62,111 @@ exports.postLogin = (req, res, next) => {
       }
     })
     .catch((err) => console.log(err));
+};
+
+exports.getHotelsData = (req, res, next) => {
+  Hotel.find()
+    .then((hotels) => {
+      // Sắp xếp khách sạn theo rating
+      hotels.sort((a, b) => b.rating - a.rating);
+      // Lấy top 3 khách sạn
+      const topHotels = hotels.slice(0, 3);
+
+      // Hàm đếm số lượng khách sạn theo khu vực
+      const countHotelsByArea = (arr, value) => {
+        const count = arr.reduce((accumulator, currentValue) => {
+          if (currentValue.city === value) {
+            accumulator++;
+          }
+          return accumulator;
+        }, 0);
+
+        return count;
+      };
+
+      // // Hàm đếm số lượng khách sạn theo loại
+      const countHotelsByType = (arr, key) => {
+        const count = arr.reduce((accumulator, currentValue) => {
+          if (currentValue.type === key) {
+            accumulator++;
+          }
+          return accumulator;
+        }, 0);
+
+        return count;
+      };
+
+      // Đếm số lượng khách sạn theo từng khu vực
+      const hotelsHn = countHotelsByArea(hotels, "Ha Noi");
+      const hotelsHCM = countHotelsByArea(hotels, "Ho Chi Minh");
+      const hotelsDn = countHotelsByArea(hotels, "Da Nang");
+
+      // Đếm số lượng khách sạn theo từng loại
+      const hotelNum = countHotelsByType(hotels, "hotel");
+      const apartment = countHotelsByType(hotels, "apartment");
+      const resort = countHotelsByType(hotels, "resort");
+      const villa = countHotelsByType(hotels, "villa");
+      const cabin = countHotelsByType(hotels, "cabin");
+
+      res.status(200).json({
+        hotelsByArea: {
+          HaNoi: hotelsHn,
+          HoChiMinh: hotelsHCM,
+          DaNang: hotelsDn,
+        },
+        hotelsByType: {
+          hotel: hotelNum,
+          apartment,
+          resort,
+          villa,
+          cabin,
+        },
+        top3Hotel: topHotels,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.postSearchHotel = (req, res, next) => {
+  const area = req.body.area;
+  const dateStart = req.body.dateStart;
+  const dateEnd = req.body.dateEnd;
+  const peopleNum = req.body.peopleNum;
+  const roomNum = req.body.roomNum;
+
+  Hotel.aggregate(
+    [
+      // Lấy các khách sạn có thành phố trùng khớp với thành phố mong muốn
+      {
+        $match: { city: area },
+      },
+      // Lấy danh sách các phòng của mỗi khách sạn
+      {
+        $lookup: {
+          from: "rooms",
+          localField: "rooms",
+          foreignField: "_id",
+          as: "rooms",
+        },
+      },
+      // Tính tổng số phòng của mỗi loại phòng trong khách sạn
+      {
+        $addFields: {
+          totalRooms: { $sum: "$rooms.roomNumbers" },
+        },
+      },
+      // Lọc ra các khách sạn có tổng số phòng lớn hơn số phòng mong muốn
+      {
+        $match: { totalRooms: { $gt: roomNum } },
+      },
+    ],
+    (err, hotels) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      // In ra danh sách các khách sạn đáp ứng điều kiện
+      console.log(hotels);
+    }
+  );
 };

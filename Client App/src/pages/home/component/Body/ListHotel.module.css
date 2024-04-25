@@ -9,15 +9,18 @@
 }
 
 .hotel-content {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: space-between; */
+  gap: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .image-hotel {
-  height: 275px;
-  width: 275px;
+  height: 263px;
+  width: 100%;
+  object-fit: cover;
   cursor: pointer;
 }
 

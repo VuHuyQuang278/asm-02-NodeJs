@@ -8,4 +8,6 @@ router.post("/signup", hotelController.postSignUp);
 
 router.post("/login", hotelController.postLogin);
 
+router.get("/", hotelController.getHotelsData);
+
 module.exports = router;

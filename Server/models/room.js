@@ -19,10 +19,12 @@ const roomSchema = new Schema({
     type: String,
     required: true,
   },
-  roomNumbers: {
-    type: Number,
-    required: true,
-  },
+  roomNumbers: [
+    {
+      type: Number,
+      required: true,
+    },
+  ],
 });
 
 module.exports = mongoose.model("Room", roomSchema);

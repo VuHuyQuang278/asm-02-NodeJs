@@ -23,10 +23,12 @@ const hotelSchema = new Schema({
     type: Number,
     required: true,
   },
-  photos: {
-    type: String,
-    required: true,
-  },
+  photos: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   desc: {
     type: String,
     required: true,
