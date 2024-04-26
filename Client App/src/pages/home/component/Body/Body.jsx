@@ -18,7 +18,6 @@ const Body = () => {
 
       const data = await res.json();
 
-      console.log(data);
       setHotelData(data);
     } catch (error) {
       console.log(error.message);

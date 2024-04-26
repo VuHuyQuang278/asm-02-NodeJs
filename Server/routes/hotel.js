@@ -10,4 +10,6 @@ router.post("/login", hotelController.postLogin);
 
 router.get("/", hotelController.getHotelsData);
 
+router.get("/detail/:hotelId", hotelController.getDetailHotel);
+
 module.exports = router;

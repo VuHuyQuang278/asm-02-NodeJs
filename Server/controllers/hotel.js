@@ -133,40 +133,14 @@ exports.postSearchHotel = (req, res, next) => {
   const dateEnd = req.body.dateEnd;
   const peopleNum = req.body.peopleNum;
   const roomNum = req.body.roomNum;
+};
 
-  Hotel.aggregate(
-    [
-      // Lấy các khách sạn có thành phố trùng khớp với thành phố mong muốn
-      {
-        $match: { city: area },
-      },
-      // Lấy danh sách các phòng của mỗi khách sạn
-      {
-        $lookup: {
-          from: "rooms",
-          localField: "rooms",
-          foreignField: "_id",
-          as: "rooms",
-        },
-      },
-      // Tính tổng số phòng của mỗi loại phòng trong khách sạn
-      {
-        $addFields: {
-          totalRooms: { $sum: "$rooms.roomNumbers" },
-        },
-      },
-      // Lọc ra các khách sạn có tổng số phòng lớn hơn số phòng mong muốn
-      {
-        $match: { totalRooms: { $gt: roomNum } },
-      },
-    ],
-    (err, hotels) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      // In ra danh sách các khách sạn đáp ứng điều kiện
-      console.log(hotels);
-    }
-  );
+exports.getDetailHotel = (req, res, next) => {
+  const hotelId = req.params.hotelId;
+
+  Hotel.findById(hotelId)
+    .then((hotel) => {
+      return res.status(200).json(hotel);
+    })
+    .catch((err) => console.log(err));
 };

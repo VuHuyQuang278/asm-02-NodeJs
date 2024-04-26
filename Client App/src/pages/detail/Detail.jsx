@@ -10,35 +10,64 @@ import ImgHotel from "./component/ImgHotel";
 import Description from "./component/Description";
 
 // Lấy dữ liệu từ file json
-import detailData from "./data/detail.json";
+// import detailData from "./data/detail.json";
+import { useParams } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
 
 const Detail = () => {
+  const params = useParams();
+
+  const hotelId = params.hotelId;
+
+  const [hotelData, setHotelData] = useState();
+
+  const fetchHotelData = useCallback(async () => {
+    try {
+      const res = await fetch("http://localhost:5000/detail/" + hotelId);
+
+      if (!res.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      const data = await res.json();
+
+      console.log(data);
+      setHotelData(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, [hotelId]);
+
+  useEffect(() => {
+    fetchHotelData();
+  }, [fetchHotelData]);
+
   return (
-    <div>
+    <>
       <div className={style["nav-container"]}>
         <div className={style.nav}>
           <NavBar />
         </div>
       </div>
-      {detailData && (
+      {hotelData && (
         <div>
           <InforHotel
-            name={detailData.name}
-            address={detailData.address}
-            distance={detailData.distance}
-            price={detailData.price}
+            name={hotelData.name}
+            address={hotelData.address}
+            distance={hotelData.distance}
+            price={hotelData.cheapestPrice}
           />
-          <ImgHotel photos={detailData.photos} />
+          <ImgHotel photos={hotelData.photos} />
           <Description
-            title={detailData.title}
-            description={detailData.description}
-            nine_night_price={detailData.nine_night_price}
+            title={hotelData.title}
+            description={hotelData.desc}
+            cheapestPrice={hotelData.cheapestPrice}
           />
         </div>
       )}
       <Form />
       <Footer />
-    </div>
+    </>
   );
 };
 
