@@ -81,7 +81,7 @@
       "https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FCCDN%2FNJS301%2FAssignment_Image%2FAssignment_02%2F342349064.jpg?alt=media&token=e0d554e5-5624-43fe-bed2-e55d4ef05eb7",
       "https://firebasestorage.googleapis.com/v0/b/funix-way.appspot.com/o/xSeries%2FCCDN%2FNJS301%2FAssignment_Image%2FAssignment_02%2F342349111.jpg?alt=media&token=afa36329-c2f7-43bf-a82d-d54b46fdc244"
     ],
-    "rooms": "[6311c083f2fce6ea18172fba, 6311c0a8f2fce6ea18172fc3]",
+    "rooms": ["6311c083f2fce6ea18172fba", "6311c0a8f2fce6ea18172fc3"],
     "title": "Alagon Saigon Hotel & Spa",
     "type": "hotel",
     "rating": 5

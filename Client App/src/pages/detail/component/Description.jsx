@@ -1,6 +1,5 @@
 // Nhập module css
 import style from "./Description.module.css";
-import { Link } from "react-router-dom";
 
 const Description = (props) => {
   return (
@@ -19,9 +18,7 @@ const Description = (props) => {
           <span className={style.number}>${props.cheapestPrice}</span> (9
           nights)
         </p>
-        <Link to={"/"} className={style.btn}>
-          Reserve or Book Now!
-        </Link>
+        <button className={style.btn}>Reserve or Book Now!</button>
       </div>
     </div>
   );

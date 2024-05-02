@@ -12,4 +12,8 @@ router.get("/", hotelController.getHotelsData);
 
 router.get("/detail/:hotelId", hotelController.getDetailHotel);
 
+router.post("/transaction", hotelController.postTransaction);
+
+// router.get("/transaction/:hotelId", hotelController.getTransaction);
+
 module.exports = router;

@@ -15,6 +15,7 @@ const router = createBrowserRouter([
       { path: "detail/:hotelId", element: <Detail /> },
       { path: "login", element: <LoginPage /> },
       { path: "signup", element: <SignupPage /> },
+      // { path: "transaction/:hotelId", element: <Transaction /> },
     ],
   },
 ]);

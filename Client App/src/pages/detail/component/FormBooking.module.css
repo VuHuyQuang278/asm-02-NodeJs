@@ -1,0 +1,112 @@
+.form-container {
+  width: 80%;
+  margin: 2rem auto;
+}
+
+.date-infor {
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+}
+
+.form-date {
+  width: 35%;
+}
+
+.form-infor {
+  width: 60%;
+}
+
+.daterange {
+  width: 100%;
+  height: auto;
+}
+
+.title {
+  padding-bottom: 1rem;
+}
+
+.input-container {
+  padding-bottom: 1rem;
+}
+
+.lable {
+  display: block;
+  padding-bottom: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+}
+
+.room-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4rem;
+  row-gap: 2rem;
+  justify-content: start;
+  padding-top: 1rem;
+}
+
+.desc-room {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.room-infor {
+  width: 60%;
+}
+
+.price {
+  font-weight: 700;
+}
+
+.room-numbers {
+  width: 30%;
+}
+
+.room-numbers {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.checkbox-room {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.total-bill {
+  padding-bottom: 1rem;
+  padding-top: 2rem;
+}
+
+.payment {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5rem;
+}
+
+.select {
+  padding: 0.5rem;
+  font-size: medium;
+  width: 30%;
+}
+
+.btn {
+  font-size: larger;
+  font-weight: 600;
+  color: #fff;
+  background-color: #0071c2;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+}

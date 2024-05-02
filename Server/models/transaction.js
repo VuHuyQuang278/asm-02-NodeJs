@@ -13,11 +13,12 @@ const transactionSchema = new Schema({
     ref: "Hotel",
     required: true,
   },
-  room: {
-    type: Schema.Types.ObjectId,
-    ref: "Room",
-    required: true,
-  },
+  room: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   dateStart: {
     type: Date,
     required: true,

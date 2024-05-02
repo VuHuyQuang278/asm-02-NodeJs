@@ -2,6 +2,7 @@ const User = require("../models/user");
 const Hotel = require("../models/hotel");
 const Transaction = require("../models/transaction");
 const Room = require("../models/room");
+const { ObjectId } = require("mongodb");
 
 exports.postSignUp = (req, res, next) => {
   const userName = req.body.userName;
@@ -51,6 +52,7 @@ exports.postLogin = (req, res, next) => {
     .then((user) => {
       if (user.password === password) {
         req.user = user;
+        console.log(req.user);
         return res.status(200).json({
           user: user,
           message: "Logged in successfully",
@@ -133,14 +135,115 @@ exports.postSearchHotel = (req, res, next) => {
   const dateEnd = req.body.dateEnd;
   const peopleNum = req.body.peopleNum;
   const roomNum = req.body.roomNum;
+
+  async function findAvailableHotels(
+    city,
+    startDate,
+    endDate,
+    numPeople,
+    numRooms
+  ) {
+    try {
+      // Tìm kiếm các giao dịch đã đặt trong khoảng thời gian này
+      const bookedTransactions = await Transaction.find({
+        dateStart: { $lte: endDate },
+        dateEnd: { $gte: startDate },
+      }).select("hotel room");
+
+      // Lấy danh sách các khách sạn đã đặt trong khoảng thời gian này
+      const bookedHotels = bookedTransactions.map(
+        (transaction) => transaction.hotel
+      );
+
+      // Tìm kiếm các khách sạn thoả mãn các điều kiện
+      const availableHotels = await Hotel.find({
+        city: city,
+        _id: { $nin: bookedHotels }, // Không nằm trong danh sách khách sạn đã đặt
+        "rooms.maxPeople": { $gte: numPeople }, // Có ít nhất một phòng đủ chỗ cho số lượng người mong muốn
+      }).populate({
+        path: "rooms",
+        match: {
+          roomNumbers: { $exists: true, $ne: [], $size: { $gte: numRooms } }, // Có ít nhất số lượng phòng mong muốn
+        },
+        select: "-roomNumbers", // Không hiển thị danh sách số phòng
+      });
+
+      return availableHotels;
+    } catch (error) {
+      console.error("Error finding available hotels:", error);
+      throw error;
+    }
+  }
+  findAvailableHotels(
+    area,
+    new Date(dateStart),
+    new Date(dateEnd),
+    +peopleNum,
+    roomNum
+  )
+    .then((availableHotels) => {
+      console.log("Available hotels:", availableHotels);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 };
 
 exports.getDetailHotel = (req, res, next) => {
   const hotelId = req.params.hotelId;
 
   Hotel.findById(hotelId)
+    .populate("rooms")
+    .exec()
     .then((hotel) => {
-      return res.status(200).json(hotel);
+      Transaction.find().then((transactions) => {
+        return res.status(200).json({
+          hotel,
+          transactions,
+        });
+      });
     })
     .catch((err) => console.log(err));
 };
+
+exports.postTransaction = (req, res, next) => {
+  const user = new ObjectId(req.body.user);
+  const hotel = new ObjectId(req.body.hotel);
+  const room = req.body.room;
+  const dateStart = req.body.dateStart;
+  const dateEnd = req.body.dateEnd;
+  const price = req.body.price;
+  const payment = req.body.payment;
+  const status = req.body.status;
+
+  const transaction = new Transaction({
+    user,
+    hotel,
+    room,
+    dateStart,
+    dateEnd,
+    price,
+    payment,
+    status,
+  });
+
+  transaction
+    .save()
+    .then((result) => {
+      res.status(200).json({
+        message: "create transaction!",
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+// exports.getTransaction = (req, res, next) => {
+//   const hotelId = req.params.hotelId;
+//   Hotel.findById(hotelId)
+//     .populate("rooms")
+//     .exec()
+//     .then((hotel) => {
+//       return res.status(200).json(hotel);
+//     })
+//     .catch((err) => console.log(err));
+// };

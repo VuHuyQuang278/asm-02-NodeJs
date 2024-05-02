@@ -4,7 +4,6 @@ import style from "./InforHotel.module.css";
 // Nhập thư viện FontAwesomeIcon và icon faLocationDot
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 
 const InforHotel = (props) => {
   return (
@@ -24,9 +23,7 @@ const InforHotel = (props) => {
         </p>
       </div>
       <div>
-        <Link to={"/"} className={style.btn}>
-          Reserve or Book Now!
-        </Link>
+        <button className={style.btn}>Reserve or Book Now!</button>
       </div>
     </div>
   );

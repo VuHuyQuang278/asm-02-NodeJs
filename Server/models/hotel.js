@@ -41,11 +41,13 @@ const hotelSchema = new Schema({
     type: String,
     required: true,
   },
-  rooms: {
-    type: Schema.Types.ObjectId,
-    ref: "Room",
-    required: true,
-  },
+  rooms: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Room",
+      required: true,
+    },
+  ],
 });
 
 module.exports = mongoose.model("Hotel", hotelSchema);

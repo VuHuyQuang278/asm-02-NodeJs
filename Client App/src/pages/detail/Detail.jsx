@@ -8,9 +8,8 @@ import Footer from "../home/component/Footer/Footer";
 import InforHotel from "./component/InforlHotel";
 import ImgHotel from "./component/ImgHotel";
 import Description from "./component/Description";
+import FormBooking from "./component/FormBooking";
 
-// Lấy dữ liệu từ file json
-// import detailData from "./data/detail.json";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 
@@ -20,6 +19,7 @@ const Detail = () => {
   const hotelId = params.hotelId;
 
   const [hotelData, setHotelData] = useState();
+  const [transactions, setTransaction] = useState([]);
 
   const fetchHotelData = useCallback(async () => {
     try {
@@ -30,9 +30,10 @@ const Detail = () => {
       }
 
       const data = await res.json();
+      // console.log(data);
 
-      console.log(data);
-      setHotelData(data);
+      setHotelData(data.hotel);
+      setTransaction(data.transactions);
     } catch (error) {
       console.log(error.message);
     }
@@ -56,15 +57,23 @@ const Detail = () => {
             address={hotelData.address}
             distance={hotelData.distance}
             price={hotelData.cheapestPrice}
+            hotelId={hotelId}
           />
           <ImgHotel photos={hotelData.photos} />
           <Description
             title={hotelData.title}
             description={hotelData.desc}
             cheapestPrice={hotelData.cheapestPrice}
+            hotelId={hotelId}
+          />
+          <FormBooking
+            roomsData={hotelData.rooms}
+            hotelId={hotelId}
+            transactions={transactions}
           />
         </div>
       )}
+
       <Form />
       <Footer />
     </>
