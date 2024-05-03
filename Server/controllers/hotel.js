@@ -3,6 +3,7 @@ const Hotel = require("../models/hotel");
 const Transaction = require("../models/transaction");
 const Room = require("../models/room");
 const { ObjectId } = require("mongodb");
+const user = require("../models/user");
 
 exports.postSignUp = (req, res, next) => {
   const userName = req.body.userName;
@@ -237,13 +238,13 @@ exports.postTransaction = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-// exports.getTransaction = (req, res, next) => {
-//   const hotelId = req.params.hotelId;
-//   Hotel.findById(hotelId)
-//     .populate("rooms")
-//     .exec()
-//     .then((hotel) => {
-//       return res.status(200).json(hotel);
-//     })
-//     .catch((err) => console.log(err));
-// };
+exports.getTransaction = (req, res, next) => {
+  const userId = new ObjectId(req.params.userId);
+  Transaction.find({ user: userId })
+    .populate("hotel")
+    .exec()
+    .then((transactions) => {
+      return res.status(200).json(transactions);
+    })
+    .catch((err) => console.log(err));
+};

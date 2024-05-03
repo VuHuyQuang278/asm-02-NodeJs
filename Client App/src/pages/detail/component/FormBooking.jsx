@@ -66,7 +66,8 @@ const FormBooking = (props) => {
     });
 
     const avaiRooms = [];
-    // console.log(roomsData);
+    console.log(roomsData);
+    console.log(transactions);
 
     for (let i = 0; i < roomsData.length; i++) {
       for (let j = 0; j < roomsData[i].roomNumbers.length; j++) {
@@ -77,13 +78,21 @@ const FormBooking = (props) => {
             const dateStart2 = new Date(event.selection.startDate);
             const dateEnd2 = new Date(event.selection.endDate);
 
-            if (
-              (roomsData[i].roomNumbers[j] === transactions[k].rooms &&
-                dateEnd1 < dateStart2) ||
-              dateStart1 > dateEnd2
-            ) {
-              avaiRooms[i].push(roomsData[i].roomNumbers[j]);
+            for (let l = 0; l < transactions[k].room.length; l++) {
+              if (
+                (roomsData[i].roomNumbers[j] === transactions[k].room[l] &&
+                  dateEnd1 < dateStart2) ||
+                dateStart1 > dateEnd2
+              ) {
+                avaiRooms[i].push(roomsData[i].roomNumbers[j]);
+              }
             }
+          }
+
+          if (avaiRooms[i] === undefined) {
+            avaiRooms[i] = [roomsData[i].roomNumbers[j]];
+          } else {
+            avaiRooms[i].push(roomsData[i].roomNumbers[j]);
           }
         } else {
           if (avaiRooms[i] === undefined) {
@@ -95,6 +104,7 @@ const FormBooking = (props) => {
       }
     }
 
+    console.log(avaiRooms);
     setroomsAvailable(avaiRooms);
 
     // Lấy tất cả các checkbox trong trang
@@ -164,10 +174,13 @@ const FormBooking = (props) => {
     if (isLogin) {
       if (date.endDate - date.startDate === 1) {
         alert("Please choose dates");
+        return;
       } else if (selectPayMethod === "choose-method") {
         alert("Please select payment method");
+        return;
       } else if (totalPrice === 0) {
         alert("Please choose rooms");
+        return;
       }
     } else {
       // Không thì yêu cầu người dùng đăng nhập
@@ -199,7 +212,7 @@ const FormBooking = (props) => {
           throw new Error("Something went wrong!");
         }
 
-        // navigate("/transaction");
+        navigate(`/transaction/${user._id}`);
       } catch (error) {
         console.log(error.message);
       }
@@ -323,7 +336,7 @@ const FormBooking = (props) => {
             onChange={changePayMethodHandler}
           >
             <option value="choose-method">Select Payment Method</option>
-            <option value="creditCard">Credit Card</option>
+            <option value="credit card">Credit Card</option>
             <option value="cash">Cash</option>
           </select>
           <button type="submit" className={style.btn}>

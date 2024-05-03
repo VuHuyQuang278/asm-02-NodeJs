@@ -5,6 +5,7 @@ import Detail from "./pages/detail/Detail";
 import Search from "./pages/search/Search";
 import LoginPage from "./pages/login/LoginPage";
 import SignupPage from "./pages/signup/SignupPage";
+import Transaction from "./pages/transaction/Transaction";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
       { path: "detail/:hotelId", element: <Detail /> },
       { path: "login", element: <LoginPage /> },
       { path: "signup", element: <SignupPage /> },
-      // { path: "transaction/:hotelId", element: <Transaction /> },
+      { path: "transaction/:userId", element: <Transaction /> },
     ],
   },
 ]);

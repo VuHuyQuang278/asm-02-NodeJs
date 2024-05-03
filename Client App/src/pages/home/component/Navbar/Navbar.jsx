@@ -43,7 +43,7 @@ const NavBar = () => {
           {isLogin && <div className={style["user-email"]}>{userEmail}</div>}
           {isLogin ? (
             <>
-              <Link to={"/"} className={style.button}>
+              <Link to={`/transaction/${user._id}`} className={style.button}>
                 Transactions
               </Link>
               <button onClick={logoutHandle} className={style.button}>
