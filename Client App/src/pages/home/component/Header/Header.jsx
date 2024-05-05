@@ -3,6 +3,8 @@ import style from "./Header.module.css";
 // Nhập component
 import FormSearch from "./FormSearch";
 
+import { Link } from "react-router-dom";
+
 const Header = () => {
   return (
     <div className={style.header}>
@@ -11,7 +13,9 @@ const Header = () => {
         Get rewarded for your travels - unlock instant saving of 10% or more
         with a free account
       </p>
-      <p className={style["btn-register"]}>Sign in / Register</p>
+      <Link to={"/login"} className={style["btn-register"]}>
+        Sign in / Register
+      </Link>
       <FormSearch />
     </div>
   );

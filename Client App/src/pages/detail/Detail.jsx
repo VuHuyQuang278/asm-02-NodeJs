@@ -10,16 +10,31 @@ import ImgHotel from "./component/ImgHotel";
 import Description from "./component/Description";
 import FormBooking from "./component/FormBooking";
 
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
 
 const Detail = () => {
   const params = useParams();
 
   const hotelId = params.hotelId;
 
+  const navigate = useNavigate();
+
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
   const [hotelData, setHotelData] = useState();
   const [transactions, setTransaction] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const openForm = () => {
+    if (isLogin) {
+      setOpen(!open);
+    } else {
+      navigate("/login");
+      alert("Login, please!");
+    }
+  };
 
   const fetchHotelData = useCallback(async () => {
     try {
@@ -65,15 +80,17 @@ const Detail = () => {
             description={hotelData.desc}
             cheapestPrice={hotelData.cheapestPrice}
             hotelId={hotelId}
+            onClick={openForm}
           />
-          <FormBooking
-            roomsData={hotelData.rooms}
-            hotelId={hotelId}
-            transactions={transactions}
-          />
+          {open && (
+            <FormBooking
+              roomsData={hotelData.rooms}
+              hotelId={hotelId}
+              transactions={transactions}
+            />
+          )}
         </div>
       )}
-
       <Form />
       <Footer />
     </>

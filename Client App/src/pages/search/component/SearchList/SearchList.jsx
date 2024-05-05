@@ -1,27 +1,25 @@
 // Lấy dữ liệu từ file json
-import searchData from "../../data/search.json";
+// import searchData from "../../data/search.json";
 
 // Nhập các component
 import SearchListItem from "./SearchListItem";
 
-const SearchList = () => {
+const SearchList = ({ hotelData }) => {
+  console.log(hotelData);
   return (
     <div>
       {/* Kiểm tra có dữ liệu không nếu có thì hiển thị  */}
-      {searchData &&
-        searchData.map((item, i) => (
+      {hotelData &&
+        hotelData.map((item) => (
           <SearchListItem
-            key={i}
+            key={item._id}
             name={item.name}
             distance={item.distance}
-            tag={item.tag}
-            type={item.type}
-            description={item.description}
-            free_cancel={item.free_cancel}
-            price={item.price}
-            rate={item.rate}
-            rate_text={item.rate_text}
-            image_url={item.image_url}
+            hotelId={item._id}
+            description={item.desc}
+            price={item.cheapestPrice}
+            rate={item.rating}
+            image_url={item.photos[0]}
           />
         ))}
     </div>

@@ -18,7 +18,9 @@ const Description = (props) => {
           <span className={style.number}>${props.cheapestPrice}</span> (9
           nights)
         </p>
-        <button className={style.btn}>Reserve or Book Now!</button>
+        <button onClick={props.onClick} className={style.btn}>
+          Reserve or Book Now!
+        </button>
       </div>
     </div>
   );

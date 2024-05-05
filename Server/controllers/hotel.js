@@ -3,7 +3,6 @@ const Hotel = require("../models/hotel");
 const Transaction = require("../models/transaction");
 const Room = require("../models/room");
 const { ObjectId } = require("mongodb");
-const user = require("../models/user");
 
 exports.postSignUp = (req, res, next) => {
   const userName = req.body.userName;
@@ -53,7 +52,6 @@ exports.postLogin = (req, res, next) => {
     .then((user) => {
       if (user.password === password) {
         req.user = user;
-        console.log(req.user);
         return res.status(200).json({
           user: user,
           message: "Logged in successfully",
@@ -137,57 +135,50 @@ exports.postSearchHotel = (req, res, next) => {
   const peopleNum = req.body.peopleNum;
   const roomNum = req.body.roomNum;
 
-  async function findAvailableHotels(
-    city,
-    startDate,
-    endDate,
-    numPeople,
-    numRooms
-  ) {
-    try {
-      // Tìm kiếm các giao dịch đã đặt trong khoảng thời gian này
-      const bookedTransactions = await Transaction.find({
-        dateStart: { $lte: endDate },
-        dateEnd: { $gte: startDate },
-      }).select("hotel room");
+  const dateStart2 = new Date(dateStart);
+  const dateEnd2 = new Date(dateEnd);
 
-      // Lấy danh sách các khách sạn đã đặt trong khoảng thời gian này
-      const bookedHotels = bookedTransactions.map(
-        (transaction) => transaction.hotel
-      );
+  console.log(req.body);
 
-      // Tìm kiếm các khách sạn thoả mãn các điều kiện
-      const availableHotels = await Hotel.find({
-        city: city,
-        _id: { $nin: bookedHotels }, // Không nằm trong danh sách khách sạn đã đặt
-        "rooms.maxPeople": { $gte: numPeople }, // Có ít nhất một phòng đủ chỗ cho số lượng người mong muốn
-      }).populate({
-        path: "rooms",
-        match: {
-          roomNumbers: { $exists: true, $ne: [], $size: { $gte: numRooms } }, // Có ít nhất số lượng phòng mong muốn
-        },
-        select: "-roomNumbers", // Không hiển thị danh sách số phòng
-      });
+  Hotel.find({ city: area })
+    .populate("rooms")
+    .then((hotels) => {
+      Transaction.find()
+        .then((transactions) => {
+          hotels.filter((hotel) => {
+            return hotel.rooms.filter((room) => {
+              return (
+                room.maxPeople >= peopleNum &&
+                room.roomNumbers.length >= roomNum
+              );
+            });
+          });
 
-      return availableHotels;
-    } catch (error) {
-      console.error("Error finding available hotels:", error);
-      throw error;
-    }
-  }
-  findAvailableHotels(
-    area,
-    new Date(dateStart),
-    new Date(dateEnd),
-    +peopleNum,
-    roomNum
-  )
-    .then((availableHotels) => {
-      console.log("Available hotels:", availableHotels);
+          transactions.forEach((transaction) => {
+            let dateStart1 = new Date(transaction.dateStart);
+            let dateEnd1 = new Date(transaction.dateEnd);
+
+            for (let i = 0; i < hotels.length; i++) {
+              for (let j = 0; j < hotels[i].rooms.length; j++) {
+                hotels[i].rooms[j].roomNumbers.forEach((roomNumber) => {
+                  transaction.room.forEach((room) => {
+                    if (
+                      (room === roomNumber && dateEnd1 < dateStart2) ||
+                      dateStart1 > dateEnd2
+                    ) {
+                      hotels.splice(i, 1);
+                    }
+                  });
+                });
+              }
+            }
+          });
+
+          return res.status(200).json(hotels);
+        })
+        .catch((err) => console.log(err));
     })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    .catch((err) => console.log(err));
 };
 
 exports.getDetailHotel = (req, res, next) => {

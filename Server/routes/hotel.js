@@ -10,6 +10,8 @@ router.post("/login", hotelController.postLogin);
 
 router.get("/", hotelController.getHotelsData);
 
+router.post("/search", hotelController.postSearchHotel);
+
 router.get("/detail/:hotelId", hotelController.getDetailHotel);
 
 router.post("/transaction", hotelController.postTransaction);
