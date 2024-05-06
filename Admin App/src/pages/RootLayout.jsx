@@ -24,7 +24,7 @@ const RootLayout = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="w-1/5 border-2 border-collapse">
+      <div className="w-1/6 border-2 border-collapse">
         <h2 className="text-center mx-auto py-3 font-medium text-lg text-blue-800">
           Admin Page
         </h2>
