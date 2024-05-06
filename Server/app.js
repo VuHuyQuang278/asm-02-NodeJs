@@ -11,8 +11,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const hotelRoutes = require("./routes/hotel");
+const adminRoutes = require("./routes/admin");
 
 app.use(hotelRoutes);
+app.use("/admin", adminRoutes);
 
 mongoose
   .connect(

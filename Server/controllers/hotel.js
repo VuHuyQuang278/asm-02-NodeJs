@@ -1,7 +1,6 @@
 const User = require("../models/user");
 const Hotel = require("../models/hotel");
 const Transaction = require("../models/transaction");
-const Room = require("../models/room");
 const { ObjectId } = require("mongodb");
 
 exports.postSignUp = (req, res, next) => {
@@ -137,8 +136,6 @@ exports.postSearchHotel = (req, res, next) => {
 
   const dateStart2 = new Date(dateStart);
   const dateEnd2 = new Date(dateEnd);
-
-  console.log(req.body);
 
   Hotel.find({ city: area })
     .populate("rooms")
