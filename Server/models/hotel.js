@@ -23,6 +23,10 @@ const hotelSchema = new Schema({
     type: Number,
     required: true,
   },
+  title: {
+    type: String,
+    required: true,
+  },
   photos: [
     {
       type: String,
@@ -31,6 +35,10 @@ const hotelSchema = new Schema({
   ],
   desc: {
     type: String,
+    required: true,
+  },
+  cheapestPrice: {
+    type: Number,
     required: true,
   },
   rating: {

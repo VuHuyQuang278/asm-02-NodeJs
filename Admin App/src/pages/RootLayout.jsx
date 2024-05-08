@@ -12,6 +12,7 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch } from "react-redux";
 import { authActions } from "../store/auth";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const RootLayout = () => {
   const dispatch = useDispatch();
@@ -32,22 +33,34 @@ const RootLayout = () => {
         <div className="ml-8 text-blue-800">
           <h3>MAIN</h3>
           <ul className="ml-4 my-3">
-            <li className="flex items-center justify-start gap-3">
-              <FontAwesomeIcon icon={faBars} />
-              <p>Dashboard</p>
+            <li>
+              <Link to={"/"} className="flex items-center justify-start gap-3">
+                <FontAwesomeIcon icon={faBars} />
+                <p>Dashboard</p>
+              </Link>
             </li>
           </ul>
         </div>
         <div className="ml-8 text-blue-800">
           <h3>LISTS</h3>
           <ul className="ml-4 my-3">
-            <li className="flex items-center justify-start gap-3 pb-2">
-              <FontAwesomeIcon icon={faUser} />
-              <p>Users</p>
+            <li>
+              <Link
+                to={"/"}
+                className="flex items-center justify-start gap-3 pb-2"
+              >
+                <FontAwesomeIcon icon={faUser} />
+                <p>Users</p>
+              </Link>
             </li>
-            <li className="flex items-center justify-start gap-3 pb-2">
-              <FontAwesomeIcon icon={faHotel} />
-              <p>Hotels</p>
+            <li>
+              <Link
+                to={"/hotel"}
+                className="flex items-center justify-start gap-3 pb-2"
+              >
+                <FontAwesomeIcon icon={faHotel} />
+                <p>Hotels</p>
+              </Link>
             </li>
             <li className="flex items-center justify-start gap-3 pb-2">
               <FontAwesomeIcon icon={faShop} />

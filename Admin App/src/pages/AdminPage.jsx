@@ -7,6 +7,7 @@ import {
   faSackDollar,
   faChevronLeft,
   faChevronRight,
+  faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 
@@ -72,21 +73,21 @@ const AdminPage = () => {
               <p className="text-2xl pb-2">$ {data.earnings}</p>
               <div className="flex justify-end">
                 <FontAwesomeIcon
-                  icon={faSackDollar}
-                  style={{ color: "#15d157" }}
-                  className="p-1 bg-green-200 mx-2 my-2"
+                  icon={faWallet}
+                  style={{ color: "#543d99" }}
+                  className="p-1 bg-purple-300 mx-2 my-2"
                 />
               </div>
             </div>
           </div>
           <div className="mb-12">
-            <h3 className="text-xl text-gray-400 mb-4 px-12">
+            <h3 className="text-xl text-gray-400 mb-4 px-12 font-medium">
               Latest Transaction
             </h3>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
               <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead className="text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
+                  <tr className="border">
                     <th scope="col" className="p-4">
                       <div className="flex items-center">
                         <input
