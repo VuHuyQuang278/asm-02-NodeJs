@@ -22,4 +22,6 @@ router.post("/rooms/add-room", adminController.postAddRoom);
 
 router.post("/rooms/delete-room", adminController.postDeleteRoom);
 
+router.get("/transactions", adminController.getListTransactions);
+
 module.exports = router;

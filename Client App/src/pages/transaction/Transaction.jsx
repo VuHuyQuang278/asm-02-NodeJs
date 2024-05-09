@@ -64,7 +64,12 @@ const Transaction = () => {
                   <td>{transaction.hotel.name}</td>
                   <td className={style.rooms}>
                     {transaction.room.map((item, i) => {
-                      return <p key={i}>{item}&nbsp;</p>;
+                      return (
+                        <p key={i}>
+                          {item}
+                          {i !== transaction.room.length - 1 && ","}
+                        </p>
+                      );
                     })}
                   </td>
                   <td>

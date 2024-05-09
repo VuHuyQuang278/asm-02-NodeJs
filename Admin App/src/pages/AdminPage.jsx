@@ -159,8 +159,13 @@ const AdminPage = () => {
                       <td className="px-6 py-4"> {item.user.userName}</td>
                       <td className="px-6 py-4"> {item.hotel.name}</td>
                       <td className="px-6 py-4">
-                        {item.room.map((item, i) => {
-                          return <p key={i}>{item}&nbsp;</p>;
+                        {item.room.map((roomNum, i) => {
+                          return (
+                            <p key={i}>
+                              {roomNum}
+                              {i !== item.room.length - 1 && ","}
+                            </p>
+                          );
                         })}
                       </td>
                       <td className="px-6 py-4">

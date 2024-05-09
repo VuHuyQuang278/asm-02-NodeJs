@@ -215,3 +215,13 @@ exports.postDeleteRoom = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.getListTransactions = (req, res, next) => {
+  Transaction.find()
+    .populate("user")
+    .populate("hotel")
+    .then((transactions) => {
+      return res.status(200).json(transactions);
+    })
+    .catch((err) => console.log(err));
+};

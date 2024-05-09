@@ -1,72 +1,33 @@
-import { Link } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
+import { format } from "date-fns";
 
-const HotelPage = () => {
-  const [hotelData, setHotelData] = useState();
+const TransactionPage = () => {
+  const [data, setData] = useState();
 
-  const fetchHotelData = useCallback(async () => {
-    const res = await fetch("http://localhost:5000/admin/hotel");
+  const fetchData = useCallback(async () => {
+    const res = await fetch("http://localhost:5000/admin/transactions");
 
     if (!res.ok) {
       throw new Error("Something went wrong!");
     }
 
-    const data = await res.json();
+    const dataRes = await res.json();
+    console.log(dataRes);
 
-    setHotelData(data);
+    setData(dataRes);
   }, []);
 
   useEffect(() => {
-    fetchHotelData();
-  }, [fetchHotelData]);
-
-  const deleteHotelHandle = (hotelId) => {
-    if (confirm("Are you sure you want to delete the hotel?") === true) {
-      const postDeleteHotel = async (hotelId) => {
-        try {
-          const res = await fetch(
-            "http://localhost:5000/admin/hotel/delete-hotel",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ hotelId }),
-              mode: "cors",
-            }
-          );
-
-          if (!res.ok) {
-            throw new Error("Something went wrong!");
-          }
-
-          const data = await res.json();
-
-          alert(data.message);
-
-          fetchHotelData();
-        } catch (error) {
-          console.log(error.message);
-        }
-      };
-
-      postDeleteHotel(hotelId);
-    } else {
-      return;
-    }
-  };
+    fetchData();
+  }, [fetchData]);
 
   return (
     <>
-      <div className="flex items-center justify-between pt-8 pb-6">
-        <h3 className="text-xl text-gray-400 pl-8 font-medium">Hotels List</h3>
-        <Link
-          to={"add-hotel"}
-          className="text-green-700 p-1 border-2 border-green-700 rounded"
-        >
-          Add New
-        </Link>
-      </div>
+      <h3 className="text-2xl text-gray-400 my-4 px-12 font-medium">
+        Transactions List
+      </h3>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-12">
           <thead className="text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="border">
               <th scope="col" className="p-4">
@@ -85,27 +46,33 @@ const HotelPage = () => {
                 ID
               </th>
               <th scope="col" className="px-6 py-3">
-                Name
+                User
               </th>
               <th scope="col" className="px-6 py-3">
-                Type
+                Hotel
               </th>
               <th scope="col" className="px-6 py-3">
-                Title
+                Room
               </th>
               <th scope="col" className="px-6 py-3">
-                City
+                Date
               </th>
               <th scope="col" className="px-6 py-3">
-                Action
+                Price
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Payment Method
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Status
               </th>
             </tr>
           </thead>
           <tbody>
-            {hotelData &&
-              hotelData.map((hotel) => (
+            {data &&
+              data.map((item) => (
                 <tr
-                  key={hotel._id}
+                  key={item._id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <td className="w-4 p-4">
@@ -127,25 +94,40 @@ const HotelPage = () => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {hotel._id}
+                    {item._id}
                   </th>
-                  <td className="px-6 py-4"> {hotel.name}</td>
-                  <td className="px-6 py-4"> {hotel.type}</td>
-                  <td className="px-6 py-4"> {hotel.title}</td>
-                  <td className="px-6 py-4"> {hotel.city}</td>
-                  <td className="px-6 py-4 flex items-center justify-evenly gap-2">
-                    <button
-                      // onClick={() => deleteHotelHandle(hotel._id)}
-                      className="p-1 bg-green-200 border border-green-500 text-green-700 rounded"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteHotelHandle(hotel._id)}
-                      className="p-1 bg-red-50 border border-red-400 text-red-600 rounded"
-                    >
-                      Delete
-                    </button>
+                  <td className="px-6 py-4"> {item.user.userName}</td>
+                  <td className="px-6 py-4"> {item.hotel.name}</td>
+                  <td className="px-6 py-4">
+                    {item.room.map((roomNum, i) => {
+                      return (
+                        <p key={i}>
+                          {roomNum}
+                          {i !== item.room.length - 1 && ","}
+                        </p>
+                      );
+                    })}
+                  </td>
+                  <td className="px-6 py-4">
+                    {format(new Date(item.dateStart), "MM/dd/yyyy")} -{" "}
+                    {format(new Date(item.dateEnd), "MM/dd/yyyy")}
+                  </td>
+                  <td className="px-6 py-4">${item.price}</td>
+                  <td className="px-6 py-4 capitalize"> {item.payment}</td>
+                  <td className="flex items-center px-6 py-4">
+                    {item.status === "Booked" ? (
+                      <p className="px-2 py-1 rounded-md bg-red-100 font-medium text-green-500">
+                        {item.status}
+                      </p>
+                    ) : item.status === "Checkin" ? (
+                      <p className="px-2 py-1 rounded-md bg-green-200 font-medium text-green-500">
+                        {item.status}
+                      </p>
+                    ) : (
+                      <p className="px-2 py-1 rounded-md bg-blue-100 font-medium text-gray-500">
+                        {item.status}
+                      </p>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -156,4 +138,4 @@ const HotelPage = () => {
   );
 };
 
-export default HotelPage;
+export default TransactionPage;

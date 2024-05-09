@@ -138,7 +138,7 @@ const RoomPage = () => {
                       // onClick={() => deleteHotelHandle(hotel._id)}
                       className="p-1 bg-green-200 border border-green-500 text-green-700 rounded"
                     >
-                      Update
+                      Edit
                     </button>
                     <button
                       onClick={() => deleteRoomHandle(room._id)}

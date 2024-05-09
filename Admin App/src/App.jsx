@@ -7,6 +7,7 @@ import HotelPage from "./pages/HotelPage";
 import AddHotelPage from "./pages/AddHotelPage";
 import RoomPage from "./pages/RoomPage";
 import AddRoomPage from "./pages/AddRoomPage";
+import TransactionPage from "./pages/TransactionPage";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
           // { path: "edit-room", element: <EditRoomPage /> },
         ],
       },
-      // { path: "transaction", element: <TransactionPage /> },
+      { path: "transaction", element: <TransactionPage /> },
     ],
   },
   { path: "/login", element: <LoginPage /> },
