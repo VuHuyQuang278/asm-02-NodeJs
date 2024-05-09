@@ -16,4 +16,10 @@ router.post("/hotel/add-hotel", adminController.postAddHotel);
 
 router.post("/hotel/delete-hotel", adminController.postDeleteHotel);
 
+router.get("/rooms", adminController.getListRoom);
+
+router.post("/rooms/add-room", adminController.postAddRoom);
+
+router.post("/rooms/delete-room", adminController.postDeleteRoom);
+
 module.exports = router;

@@ -184,8 +184,6 @@ const AddHotelPage = () => {
       rooms,
     };
 
-    console.log(body);
-
     const postHotelData = async (body) => {
       try {
         const res = await fetch("http://localhost:5000/admin/hotel/add-hotel", {
@@ -256,7 +254,6 @@ const AddHotelPage = () => {
                 )}
               </div>
             </div>
-
             <div className="w-5/12 flex flex-col gap-2">
               <label htmlFor="hotelType">Type</label>
               <div>
@@ -467,7 +464,7 @@ const AddHotelPage = () => {
           <div className="flex justify-center mb-12">
             <button
               type="submit"
-              className="w-1/12 p-1 text-slate-100 bg-green-500"
+              className="w-1/12 p-1 text-slate-100 bg-teal-700"
             >
               Send
             </button>

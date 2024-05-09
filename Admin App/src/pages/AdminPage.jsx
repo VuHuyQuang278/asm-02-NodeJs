@@ -80,12 +80,12 @@ const AdminPage = () => {
               </div>
             </div>
           </div>
-          <div className="mb-12">
+          <div className="pb-12">
             <h3 className="text-xl text-gray-400 mb-4 px-12 font-medium">
               Latest Transaction
             </h3>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-              <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-12">
                 <thead className="text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr className="border">
                     <th scope="col" className="p-4">

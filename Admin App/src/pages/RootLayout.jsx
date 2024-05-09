@@ -62,9 +62,14 @@ const RootLayout = () => {
                 <p>Hotels</p>
               </Link>
             </li>
-            <li className="flex items-center justify-start gap-3 pb-2">
-              <FontAwesomeIcon icon={faShop} />
-              <p>Rooms</p>
+            <li>
+              <Link
+                to={"/rooms"}
+                className="flex items-center justify-start gap-3 pb-2"
+              >
+                <FontAwesomeIcon icon={faShop} />
+                <p>Rooms</p>
+              </Link>
             </li>
             <li className="flex items-center justify-start gap-3 pb-2">
               <FontAwesomeIcon icon={faTruck} />

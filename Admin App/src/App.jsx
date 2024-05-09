@@ -5,6 +5,8 @@ import AdminPage from "./pages/AdminPage";
 import LoginPage from "./pages/LoginPage";
 import HotelPage from "./pages/HotelPage";
 import AddHotelPage from "./pages/AddHotelPage";
+import RoomPage from "./pages/RoomPage";
+import AddRoomPage from "./pages/AddRoomPage";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +22,14 @@ const router = createBrowserRouter([
           // { path: "edit-hotel/:hotelId", element: <EditHotelPage /> },
         ],
       },
-      // { path: "room", element: <RoomPage /> },
+      {
+        path: "rooms",
+        children: [
+          { index: true, element: <RoomPage /> },
+          { path: "add-room", element: <AddRoomPage /> },
+          // { path: "edit-room", element: <EditRoomPage /> },
+        ],
+      },
       // { path: "transaction", element: <TransactionPage /> },
     ],
   },

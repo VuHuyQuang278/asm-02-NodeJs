@@ -47,6 +47,7 @@ exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  // Xác thực tài khoản đăng nhập
   User.findOne({ email: email })
     .then((user) => {
       if (user.password === password) {
@@ -137,11 +138,13 @@ exports.postSearchHotel = (req, res, next) => {
   const dateStart2 = new Date(dateStart);
   const dateEnd2 = new Date(dateEnd);
 
+  // Tìm kiếm các khách sạn dựa theo tiêu chí đã cho
   Hotel.find({ city: area })
     .populate("rooms")
     .then((hotels) => {
       Transaction.find()
         .then((transactions) => {
+          // Tìm các khách sạn có số lượng người và số lượng phòng phù hợp
           hotels.filter((hotel) => {
             return hotel.rooms.filter((room) => {
               return (

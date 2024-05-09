@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 
-const HotelPage = () => {
-  const [hotelData, setHotelData] = useState();
+const RoomPage = () => {
+  const [roomsData, setRoomsData] = useState();
 
-  const fetchHotelData = useCallback(async () => {
-    const res = await fetch("http://localhost:5000/admin/hotel");
+  const fetchRoomsData = useCallback(async () => {
+    const res = await fetch("http://localhost:5000/admin/rooms");
 
     if (!res.ok) {
       throw new Error("Something went wrong!");
@@ -13,23 +13,23 @@ const HotelPage = () => {
 
     const data = await res.json();
 
-    setHotelData(data);
+    setRoomsData(data);
   }, []);
 
   useEffect(() => {
-    fetchHotelData();
-  }, [fetchHotelData]);
+    fetchRoomsData();
+  }, [fetchRoomsData]);
 
-  const deleteHotelHandle = (hotelId) => {
-    if (confirm("Are you sure you want to delete the hotel?") === true) {
-      const postDeleteHotel = async (hotelId) => {
+  const deleteRoomHandle = (roomId) => {
+    if (confirm("Are you sure you want to delete the room?") === true) {
+      const postDeleteRoom = async (roomId) => {
         try {
           const res = await fetch(
-            "http://localhost:5000/admin/hotel/delete-hotel",
+            "http://localhost:5000/admin/rooms/delete-room",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ hotelId }),
+              body: JSON.stringify({ roomId }),
               mode: "cors",
             }
           );
@@ -42,13 +42,13 @@ const HotelPage = () => {
 
           alert(data.message);
 
-          fetchHotelData();
+          fetchRoomsData();
         } catch (error) {
           console.log(error.message);
         }
       };
 
-      postDeleteHotel(hotelId);
+      postDeleteRoom(roomId);
     } else {
       return;
     }
@@ -57,16 +57,16 @@ const HotelPage = () => {
   return (
     <>
       <div className="flex items-center justify-between pt-8 pb-6">
-        <h3 className="text-xl text-gray-400 pl-8 font-medium">Hotels List</h3>
+        <h3 className="text-xl text-gray-400 pl-8 font-medium">Rooms List</h3>
         <Link
-          to={"add-hotel"}
+          to={"add-room"}
           className="text-green-700 p-1 border-2 border-green-700 rounded"
         >
           Add New
         </Link>
       </div>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-12">
           <thead className="text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="border">
               <th scope="col" className="p-4">
@@ -85,16 +85,16 @@ const HotelPage = () => {
                 ID
               </th>
               <th scope="col" className="px-6 py-3">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Type
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Title
               </th>
               <th scope="col" className="px-6 py-3">
-                City
+                Description
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Price
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Max People
               </th>
               <th scope="col" className="px-6 py-3">
                 Action
@@ -102,10 +102,10 @@ const HotelPage = () => {
             </tr>
           </thead>
           <tbody>
-            {hotelData &&
-              hotelData.map((hotel) => (
+            {roomsData &&
+              roomsData.map((room) => (
                 <tr
-                  key={hotel._id}
+                  key={room._id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <td className="w-4 p-4">
@@ -127,12 +127,12 @@ const HotelPage = () => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {hotel._id}
+                    {room._id}
                   </th>
-                  <td className="px-6 py-4"> {hotel.name}</td>
-                  <td className="px-6 py-4"> {hotel.type}</td>
-                  <td className="px-6 py-4"> {hotel.title}</td>
-                  <td className="px-6 py-4"> {hotel.city}</td>
+                  <td className="px-6 py-4"> {room.title}</td>
+                  <td className="px-6 py-4"> {room.desc}</td>
+                  <td className="px-6 py-4"> {room.price}</td>
+                  <td className="px-6 py-4"> {room.maxPeople}</td>
                   <td className="px-6 py-4 flex items-center justify-evenly gap-2">
                     <button
                       // onClick={() => deleteHotelHandle(hotel._id)}
@@ -141,7 +141,7 @@ const HotelPage = () => {
                       Update
                     </button>
                     <button
-                      onClick={() => deleteHotelHandle(hotel._id)}
+                      onClick={() => deleteRoomHandle(room._id)}
                       className="p-1 bg-red-50 border border-red-400 text-red-600 rounded"
                     >
                       Delete
@@ -156,4 +156,4 @@ const HotelPage = () => {
   );
 };
 
-export default HotelPage;
+export default RoomPage;
