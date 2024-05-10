@@ -134,12 +134,12 @@ const RoomPage = () => {
                   <td className="px-6 py-4"> {room.price}</td>
                   <td className="px-6 py-4"> {room.maxPeople}</td>
                   <td className="px-6 py-4 flex items-center justify-evenly gap-2">
-                    <button
-                      // onClick={() => deleteHotelHandle(hotel._id)}
+                    <Link
+                      to={`/rooms/edit-room/${room._id}`}
                       className="p-1 bg-green-200 border border-green-500 text-green-700 rounded"
                     >
                       Edit
-                    </button>
+                    </Link>
                     <button
                       onClick={() => deleteRoomHandle(room._id)}
                       className="p-1 bg-red-50 border border-red-400 text-red-600 rounded"

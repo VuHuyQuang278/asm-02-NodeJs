@@ -1,15 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
-import useInput from "../hooks/use-input";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddRoomPage = () => {
+const EditRoomPage = () => {
   const navigate = useNavigate();
+  const params = useParams();
 
-  const [hotelData, setHotelData] = useState();
+  const roomId = params.roomId;
+
+  const [roomData, setRoomData] = useState();
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredDesc, setEnteredDesc] = useState("");
+  const [enteredPrice, setEnteredPrice] = useState("");
+  const [enteredMaxPeople, setEnteredMaxPeople] = useState("");
+  const [enteredRooms, setEnteredRooms] = useState("");
 
   const fetchHotelData = useCallback(async () => {
-    const res = await fetch("http://localhost:5000/admin/hotel");
+    const res = await fetch("http://localhost:5000/admin/rooms/edit/" + roomId);
 
     if (!res.ok) {
       throw new Error("Something went wrong!");
@@ -17,80 +24,37 @@ const AddRoomPage = () => {
 
     const data = await res.json();
 
-    setHotelData(data);
+    setRoomData(data);
+    setEnteredTitle(data.room.title);
+    setEnteredDesc(data.room.desc);
+    setEnteredPrice(data.room.price);
+    setEnteredMaxPeople(data.room.maxPeople);
+    setEnteredRooms(data.room.roomNumbers.join(", "));
   }, []);
 
   useEffect(() => {
     fetchHotelData();
   }, [fetchHotelData]);
 
-  const {
-    value: enteredTitle,
-    isValid: enteredTitleIsValid,
-    hasError: titleInputHasError,
-    valueChangeHandler: titleChangedHandler,
-    inputBlurHandler: titleBlurHandler,
-    reset: resetTitleInput,
-  } = useInput((value) => value.trim() !== "", "");
+  const titleChangedHandler = (event) => {
+    setEnteredTitle(event.target.value);
+  };
 
-  const {
-    value: enteredDesc,
-    isValid: enteredDescIsValid,
-    hasError: descInputHasError,
-    valueChangeHandler: descChangedHandler,
-    inputBlurHandler: descBlurHandler,
-    reset: resetDescInput,
-  } = useInput((value) => value.trim() !== "", "");
-
-  const {
-    value: enteredPrice,
-    isValid: enteredPriceIsValid,
-    hasError: priceInputHasError,
-    valueChangeHandler: priceChangedHandler,
-    inputBlurHandler: priceBlurHandler,
-    reset: resetPriceInput,
-  } = useInput((value) => value > 0, "");
-
-  const {
-    value: enteredMaxPeople,
-    isValid: enteredMaxPeopleIsValid,
-    hasError: maxPeopleInputHasError,
-    valueChangeHandler: maxPeopleChangedHandler,
-    inputBlurHandler: maxPeopleBlurHandler,
-    reset: resetMaxPeopleInput,
-  } = useInput((value) => value > 0, "");
-
-  const {
-    value: enteredRooms,
-    isValid: enteredRoomsIsValid,
-    hasError: roomsInputHasError,
-    valueChangeHandler: roomsChangedHandler,
-    inputBlurHandler: roomsBlurHandler,
-    reset: resetRoomsInput,
-  } = useInput((value) => value.trim() !== "", "");
+  const descChangedHandler = (event) => {
+    setEnteredDesc(event.target.value);
+  };
+  const priceChangedHandler = (event) => {
+    setEnteredPrice(event.target.value);
+  };
+  const maxPeopleChangedHandler = (event) => {
+    setEnteredMaxPeople(event.target.value);
+  };
+  const roomsChangedHandler = (event) => {
+    setEnteredRooms(event.target.value);
+  };
 
   const formSubmitHandle = (event) => {
     event.preventDefault();
-
-    if (!enteredTitleIsValid) {
-      return;
-    }
-
-    if (!enteredDescIsValid) {
-      return;
-    }
-
-    if (!enteredPriceIsValid) {
-      return;
-    }
-
-    if (!enteredMaxPeopleIsValid) {
-      return;
-    }
-
-    if (!enteredRoomsIsValid) {
-      return;
-    }
 
     const roomsArr = enteredRooms
       .split(",")
@@ -104,16 +68,17 @@ const AddRoomPage = () => {
       roomsNumbers: roomsArr,
     };
 
-    console.log(body);
-
     const postHotelData = async (body) => {
       try {
-        const res = await fetch("http://localhost:5000/admin/rooms/add-room", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-          mode: "cors",
-        });
+        const res = await fetch(
+          "http://localhost:5000/admin/rooms/edit/" + roomId,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+            mode: "cors",
+          }
+        );
 
         if (!res.ok) {
           throw new Error("Something went wrong!");
@@ -123,11 +88,11 @@ const AddRoomPage = () => {
 
         alert(data.message);
 
-        resetTitleInput();
-        resetDescInput();
-        resetPriceInput();
-        resetMaxPeopleInput();
-        resetRoomsInput();
+        setEnteredTitle("");
+        setEnteredDesc("");
+        setEnteredPrice("");
+        setEnteredMaxPeople("");
+        setEnteredRooms("");
 
         navigate("/rooms");
       } catch (error) {
@@ -140,9 +105,7 @@ const AddRoomPage = () => {
 
   return (
     <>
-      <h3 className="text-xl text-gray-400 pl-8 py-4 font-medium">
-        Add New Room
-      </h3>
+      <h3 className="text-xl text-gray-400 pl-8 py-4 font-medium">Edit Room</h3>
       <div>
         <form onSubmit={formSubmitHandle}>
           <div className="flex items-center w-10/12 mx-auto justify-between mb-8">
@@ -156,12 +119,8 @@ const AddRoomPage = () => {
                   className="border-b-2 border-slate-700 focus:outline-none pl-2 pb-1 w-full"
                   placeholder="2 bed room"
                   onChange={titleChangedHandler}
-                  onBlur={titleBlurHandler}
                   value={enteredTitle}
                 />
-                {titleInputHasError && (
-                  <p className="text-red-600">Title must not be empty.</p>
-                )}
               </div>
             </div>
             <div className="w-5/12 flex flex-col gap-2">
@@ -174,12 +133,8 @@ const AddRoomPage = () => {
                   className="border-b-2 border-slate-700 focus:outline-none pl-2 pb-1 w-full"
                   placeholder="King size bed, 1 bathroom"
                   onChange={descChangedHandler}
-                  onBlur={descBlurHandler}
                   value={enteredDesc}
                 />
-                {descInputHasError && (
-                  <p className="text-red-600">Description must not be empty.</p>
-                )}
               </div>
             </div>
           </div>
@@ -194,14 +149,8 @@ const AddRoomPage = () => {
                   className="border-b-2 border-slate-700 focus:outline-none pl-2 pb-1 w-full"
                   placeholder="100"
                   onChange={priceChangedHandler}
-                  onBlur={priceBlurHandler}
                   value={enteredPrice}
                 />
-                {priceInputHasError && (
-                  <p className="text-red-600">
-                    The price must be a positive number.
-                  </p>
-                )}
               </div>
             </div>
             <div className="w-5/12 flex flex-col gap-2">
@@ -214,14 +163,8 @@ const AddRoomPage = () => {
                   className="border-b-2 border-slate-700 focus:outline-none pl-2 pb-1 w-full"
                   placeholder="2"
                   onChange={maxPeopleChangedHandler}
-                  onBlur={maxPeopleBlurHandler}
                   value={enteredMaxPeople}
                 />
-                {maxPeopleInputHasError && (
-                  <p className="text-red-600">
-                    The max people must be a positive number.
-                  </p>
-                )}
               </div>
             </div>
           </div>
@@ -234,13 +177,9 @@ const AddRoomPage = () => {
                   id="rooms"
                   className="border-2 border-slate-800 p-2 w-full"
                   onChange={roomsChangedHandler}
-                  onBlur={roomsBlurHandler}
                   value={enteredRooms}
                   placeholder="give comma between room numbers"
                 ></textarea>
-                {roomsInputHasError && (
-                  <p className="text-red-600">Rooms must not be empty.</p>
-                )}
               </div>
             </div>
             <div className="w-5/12 flex flex-col gap-2">
@@ -250,8 +189,8 @@ const AddRoomPage = () => {
                 id="hotel"
                 className="border-b-2 border-slate-700 focus:outline-none pl-2 pb-1"
               >
-                {hotelData &&
-                  hotelData.map((hotel) => (
+                {roomData &&
+                  roomData.hotels.map((hotel) => (
                     <option key={hotel._id} value={hotel.name}>
                       {hotel.name}
                     </option>
@@ -273,4 +212,4 @@ const AddRoomPage = () => {
   );
 };
 
-export default AddRoomPage;
+export default EditRoomPage;

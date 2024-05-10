@@ -182,7 +182,7 @@ const EditHotelPage = () => {
       {data && (
         <>
           <h3 className="text-xl text-gray-400 pl-8 py-4 font-medium">
-            Add New Hotel
+            Edit Hotel
           </h3>
           <div>
             <form className="w-full py-6" onSubmit={formSubmitHandle}>

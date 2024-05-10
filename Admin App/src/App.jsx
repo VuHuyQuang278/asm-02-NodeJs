@@ -9,6 +9,7 @@ import RoomPage from "./pages/RoomPage";
 import AddRoomPage from "./pages/AddRoomPage";
 import TransactionPage from "./pages/TransactionPage";
 import EditHotelPage from "./pages/EditHotelPage";
+import EditRoomPage from "./pages/EditRoomPage";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <RoomPage /> },
           { path: "add-room", element: <AddRoomPage /> },
-          // { path: "edit-room", element: <EditRoomPage /> },
+          { path: "edit-room/:roomId", element: <EditRoomPage /> },
         ],
       },
       { path: "transaction", element: <TransactionPage /> },

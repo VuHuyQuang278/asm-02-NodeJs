@@ -26,6 +26,10 @@ router.post("/rooms/add-room", adminController.postAddRoom);
 
 router.post("/rooms/delete-room", adminController.postDeleteRoom);
 
+router.get("/rooms/edit/:roomId", adminController.getEditRoom);
+
+router.post("/rooms/edit/:roomId", adminController.postEditRoom);
+
 router.get("/transactions", adminController.getListTransactions);
 
 module.exports = router;

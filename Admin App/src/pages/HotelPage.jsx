@@ -136,7 +136,6 @@ const HotelPage = () => {
                   <td className="px-6 py-4 flex items-center justify-evenly gap-2">
                     <Link
                       to={`/hotel/edit-hotel/${hotel._id}`}
-                      // onClick={() => deleteHotelHandle(hotel._id)}
                       className="p-1 bg-green-200 border border-green-500 text-green-700 rounded"
                     >
                       Edit

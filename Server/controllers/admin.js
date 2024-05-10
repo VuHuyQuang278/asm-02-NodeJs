@@ -155,7 +155,7 @@ exports.postAddRoom = (req, res, next) => {
   const price = req.body.price;
   const maxPeople = req.body.maxPeople;
   const desc = req.body.desc;
-  const roomNumbers = req.body.roomNumbers;
+  const roomNumbers = req.body.roomsNumbers;
 
   const room = new Room({
     title,
@@ -258,7 +258,7 @@ exports.postEditHotel = (req, res, next) => {
   const updateRating = req.body.rating;
   const updatePhotos = req.body.photos;
   const updateFeatured = req.body.featured;
-  const updateRooms = req.body.rooms;
+  const updateRooms = req.body.roomsNumbers;
 
   Hotel.findById(hotelId)
     .then((hotel) => {
@@ -280,6 +280,47 @@ exports.postEditHotel = (req, res, next) => {
     .then(() => {
       return res.status(200).json({
         message: "Update Hotel!",
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.getEditRoom = (req, res, next) => {
+  const roomId = req.params.roomId;
+
+  Hotel.find()
+    .then((hotels) => {
+      Room.findById(roomId)
+        .then((room) => {
+          return res.status(200).json({ hotels, room });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.postEditRoom = (req, res, next) => {
+  const roomId = req.params.roomId;
+
+  const titleUpdate = req.body.title;
+  const priceUpdate = req.body.price;
+  const maxPeopleUpdate = req.body.maxPeople;
+  const descUpdate = req.body.desc;
+  const roomNumbersUpdate = req.body.roomsNumbers;
+
+  Room.findById(roomId)
+    .then((room) => {
+      room.title = titleUpdate;
+      room.desc = descUpdate;
+      room.price = priceUpdate;
+      room.maxPeople = maxPeopleUpdate;
+      room.roomNumbers = roomNumbersUpdate;
+
+      return room.save();
+    })
+    .then(() => {
+      return res.status(200).json({
+        message: "Update Room!",
       });
     })
     .catch((err) => console.log(err));
