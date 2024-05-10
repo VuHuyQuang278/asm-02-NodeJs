@@ -31,7 +31,7 @@ const AddRoomPage = () => {
     valueChangeHandler: titleChangedHandler,
     inputBlurHandler: titleBlurHandler,
     reset: resetTitleInput,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "", "");
 
   const {
     value: enteredDesc,
@@ -40,7 +40,7 @@ const AddRoomPage = () => {
     valueChangeHandler: descChangedHandler,
     inputBlurHandler: descBlurHandler,
     reset: resetDescInput,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "", "");
 
   const {
     value: enteredPrice,
@@ -49,7 +49,7 @@ const AddRoomPage = () => {
     valueChangeHandler: priceChangedHandler,
     inputBlurHandler: priceBlurHandler,
     reset: resetPriceInput,
-  } = useInput((value) => value > 0);
+  } = useInput((value) => value > 0, "");
 
   const {
     value: enteredMaxPeople,
@@ -58,7 +58,7 @@ const AddRoomPage = () => {
     valueChangeHandler: maxPeopleChangedHandler,
     inputBlurHandler: maxPeopleBlurHandler,
     reset: resetMaxPeopleInput,
-  } = useInput((value) => value > 0);
+  } = useInput((value) => value > 0, "");
 
   const {
     value: enteredRooms,
@@ -67,7 +67,7 @@ const AddRoomPage = () => {
     valueChangeHandler: roomsChangedHandler,
     inputBlurHandler: roomsBlurHandler,
     reset: resetRoomsInput,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "", "");
 
   const formSubmitHandle = (event) => {
     event.preventDefault();

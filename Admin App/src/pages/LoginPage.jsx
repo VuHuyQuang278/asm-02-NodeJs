@@ -15,7 +15,7 @@ const LoginPage = () => {
     valueChangeHandler: emailChangedHandler,
     inputBlurHandler: emailBlurHandler,
     reset: resetEmailInput,
-  } = useInput((value) => value.includes("@"));
+  } = useInput((value) => value.includes("@"), "");
 
   const {
     value: enteredPassword,
@@ -24,7 +24,7 @@ const LoginPage = () => {
     valueChangeHandler: passwordChangedHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPasswordInput,
-  } = useInput((value) => value.length > 8);
+  } = useInput((value) => value.length > 8, "");
 
   const formSubmissionHandler = async (event) => {
     event.preventDefault();

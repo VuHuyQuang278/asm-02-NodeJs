@@ -28,7 +28,7 @@ const AddHotelPage = () => {
   }, [fetchHotelData]);
 
   const imageUrlChangeHandle = (event) => {
-    setImageUrl(event.target.value);
+    setImageUrl(event.target.value.split(",").map((item) => item.trim()));
   };
 
   const changeFeaturedHandler = (e) => {
@@ -51,7 +51,7 @@ const AddHotelPage = () => {
     valueChangeHandler: nameChangedHandler,
     inputBlurHandler: nameBlurHandler,
     reset: resetNameInput,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "", "");
 
   const {
     value: enteredType,
@@ -60,7 +60,7 @@ const AddHotelPage = () => {
     valueChangeHandler: typeChangedHandler,
     inputBlurHandler: typeBlurHandler,
     reset: resetTypeInput,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "", "");
 
   const {
     value: enteredCity,
@@ -69,7 +69,7 @@ const AddHotelPage = () => {
     valueChangeHandler: cityChangedHandler,
     inputBlurHandler: cityBlurHandler,
     reset: resetCityInput,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "", "");
 
   const {
     value: enteredAddress,
@@ -78,7 +78,7 @@ const AddHotelPage = () => {
     valueChangeHandler: addressChangedHandler,
     inputBlurHandler: addressBlurHandler,
     reset: resetAddressInput,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "", "");
 
   const {
     value: enteredDistance,
@@ -87,7 +87,7 @@ const AddHotelPage = () => {
     valueChangeHandler: distanceChangedHandler,
     inputBlurHandler: distanceBlurHandler,
     reset: resetDistanceInput,
-  } = useInput((value) => value > 0);
+  } = useInput((value) => value > 0, "");
 
   const {
     value: enteredTitle,
@@ -96,7 +96,7 @@ const AddHotelPage = () => {
     valueChangeHandler: titleChangedHandler,
     inputBlurHandler: titleBlurHandler,
     reset: resetTitleInput,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "", "");
 
   const {
     value: enteredDesc,
@@ -105,7 +105,7 @@ const AddHotelPage = () => {
     valueChangeHandler: descChangedHandler,
     inputBlurHandler: descBlurHandler,
     reset: resetDescInput,
-  } = useInput((value) => value.trim() !== "");
+  } = useInput((value) => value.trim() !== "", "");
 
   const {
     value: enteredPrice,
@@ -114,7 +114,7 @@ const AddHotelPage = () => {
     valueChangeHandler: priceChangedHandler,
     inputBlurHandler: priceBlurHandler,
     reset: resetPriceInput,
-  } = useInput((value) => value > 0);
+  } = useInput((value) => value > 0, "");
 
   const {
     value: enteredRating,
@@ -123,7 +123,7 @@ const AddHotelPage = () => {
     valueChangeHandler: ratingChangedHandler,
     inputBlurHandler: ratingBlurHandler,
     reset: resetRatingInput,
-  } = useInput((value) => value <= 5 && value >= 0 && value.trim() !== "");
+  } = useInput((value) => value <= 5 && value >= 0 && value.trim() !== "", "");
 
   const formSubmitHandle = (event) => {
     event.preventDefault();
@@ -183,6 +183,8 @@ const AddHotelPage = () => {
       featured: featured === "no" ? false : true,
       rooms,
     };
+
+    console.log(body);
 
     const postHotelData = async (body) => {
       try {
@@ -414,7 +416,7 @@ const AddHotelPage = () => {
             </div>
             <div className="w-5/12 flex flex-col gap-2">
               <label htmlFor="hotelPhotos">Images</label>
-              <input
+              <textarea
                 type="text"
                 name="hotelPhotos"
                 id="hotelPhotos"

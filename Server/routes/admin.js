@@ -16,6 +16,10 @@ router.post("/hotel/add-hotel", adminController.postAddHotel);
 
 router.post("/hotel/delete-hotel", adminController.postDeleteHotel);
 
+router.get("/hotel/edit/:hotelId", adminController.getEditHotel);
+
+router.post("/hotel/edit/:hotelId", adminController.postEditHotel);
+
 router.get("/rooms", adminController.getListRoom);
 
 router.post("/rooms/add-room", adminController.postAddRoom);

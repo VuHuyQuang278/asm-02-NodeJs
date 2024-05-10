@@ -225,3 +225,62 @@ exports.getListTransactions = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.getEditHotel = (req, res, next) => {
+  const hotelId = req.params.hotelId;
+
+  Hotel.findById(hotelId)
+    .populate("rooms")
+    .then((hotel) => {
+      Room.find()
+        .then((rooms) => {
+          return res.status(200).json({
+            rooms,
+            hotel,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.postEditHotel = (req, res, next) => {
+  const hotelId = req.params.hotelId;
+
+  const updateName = req.body.name;
+  const updateType = req.body.type;
+  const updateCity = req.body.city;
+  const updateAddress = req.body.address;
+  const updateDistance = req.body.distance;
+  const updateTitle = req.body.title;
+  const updateDesc = req.body.desc;
+  const updateCheapestPrice = req.body.cheapestPrice;
+  const updateRating = req.body.rating;
+  const updatePhotos = req.body.photos;
+  const updateFeatured = req.body.featured;
+  const updateRooms = req.body.rooms;
+
+  Hotel.findById(hotelId)
+    .then((hotel) => {
+      hotel.name = updateName;
+      hotel.type = updateType;
+      hotel.city = updateCity;
+      hotel.address = updateAddress;
+      hotel.distance = updateDistance;
+      hotel.title = updateTitle;
+      hotel.desc = updateDesc;
+      hotel.cheapestPrice = updateCheapestPrice;
+      hotel.rating = updateRating;
+      hotel.photos = updatePhotos;
+      hotel.featured = updateFeatured;
+      hotel.rooms = updateRooms;
+
+      return hotel.save();
+    })
+    .then(() => {
+      return res.status(200).json({
+        message: "Update Hotel!",
+      });
+    })
+    .catch((err) => console.log(err));
+};
