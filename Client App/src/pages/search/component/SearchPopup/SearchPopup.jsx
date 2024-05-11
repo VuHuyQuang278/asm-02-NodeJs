@@ -105,6 +105,8 @@ const SearchPopup = (props) => {
       roomNum: roomNum,
     };
 
+    console.log(body);
+
     resetCityInput();
     resetPeopleNumInput();
     reseRroomNumInput();

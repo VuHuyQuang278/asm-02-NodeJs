@@ -65,10 +65,11 @@ const FormBooking = (props) => {
       return preState;
     });
 
-    const avaiRooms = [];
+    let avaiRooms = [];
     console.log(roomsData);
     console.log(transactions);
 
+    // Lấy ra dách sách các phòng trống trong thời gian phù hợp
     for (let i = 0; i < roomsData.length; i++) {
       for (let j = 0; j < roomsData[i].roomNumbers.length; j++) {
         if (transactions.length !== 0) {
@@ -79,20 +80,20 @@ const FormBooking = (props) => {
             const dateEnd2 = new Date(event.selection.endDate);
 
             for (let l = 0; l < transactions[k].room.length; l++) {
+              // Nếu phòng trùng nhau nhưng ngày không trùng
               if (
-                (roomsData[i].roomNumbers[j] === transactions[k].room[l] &&
+                (roomsData[i].roomNumbers[j] ===
+                  parseInt(transactions[k].room[l]) &&
                   dateEnd1 < dateStart2) ||
                 dateStart1 > dateEnd2
               ) {
-                avaiRooms[i].push(roomsData[i].roomNumbers[j]);
+                if (avaiRooms[i] === undefined) {
+                  avaiRooms[i] = [roomsData[i].roomNumbers[j]];
+                } else {
+                  avaiRooms[i].push(roomsData[i].roomNumbers[j]);
+                }
               }
             }
-          }
-
-          if (avaiRooms[i] === undefined) {
-            avaiRooms[i] = [roomsData[i].roomNumbers[j]];
-          } else {
-            avaiRooms[i].push(roomsData[i].roomNumbers[j]);
           }
         } else {
           if (avaiRooms[i] === undefined) {
@@ -103,6 +104,25 @@ const FormBooking = (props) => {
         }
       }
     }
+
+    // Hàm loại bỏ số trùng lặp trong 1 array
+    function removeDuplicates(arr) {
+      return arr.filter((item, index, self) => {
+        return index === self.indexOf(item);
+      });
+    }
+
+    function cleanedArrays(arr) {
+      let cleanedArrays = [];
+      arr.forEach((subArr) => {
+        let cleanedSubArr = removeDuplicates(subArr);
+        cleanedArrays.push(cleanedSubArr);
+      });
+      return cleanedArrays;
+    }
+
+    // Loại bỏ các phòng trùng lặp
+    avaiRooms = cleanedArrays(avaiRooms);
 
     console.log(avaiRooms);
     setroomsAvailable(avaiRooms);

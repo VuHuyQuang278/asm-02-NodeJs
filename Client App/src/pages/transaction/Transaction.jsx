@@ -78,7 +78,15 @@ const Transaction = () => {
                   </td>
                   <td>${transaction.price}</td>
                   <td className={style.payment}>{transaction.payment}</td>
-                  <td>{transaction.status}</td>
+                  <td>
+                    {transaction.status === "Booked" ? (
+                      <p className={style.booked}>{transaction.status}</p>
+                    ) : transaction.status === "Checkin" ? (
+                      <p className={style.checkin}>{transaction.status}</p>
+                    ) : (
+                      <p className={style.checkout}>{transaction.status}</p>
+                    )}
+                  </td>
                 </tr>
               ))}
           </tbody>

@@ -258,7 +258,9 @@ exports.postEditHotel = (req, res, next) => {
   const updateRating = req.body.rating;
   const updatePhotos = req.body.photos;
   const updateFeatured = req.body.featured;
-  const updateRooms = req.body.roomsNumbers;
+  const updateRooms = req.body.rooms;
+
+  console.log(updateRooms);
 
   Hotel.findById(hotelId)
     .then((hotel) => {

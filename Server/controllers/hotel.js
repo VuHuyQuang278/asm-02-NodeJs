@@ -182,8 +182,10 @@ exports.postSearchHotel = (req, res, next) => {
 };
 
 exports.getDetailHotel = (req, res, next) => {
+  // Lấy id của hotel cần hiển thị
   const hotelId = req.params.hotelId;
 
+  // tìm hotel theo id và trả về res
   Hotel.findById(hotelId)
     .populate("rooms")
     .exec()
@@ -199,6 +201,7 @@ exports.getDetailHotel = (req, res, next) => {
 };
 
 exports.postTransaction = (req, res, next) => {
+  // Lấy thông tin transaction từ body
   const user = new ObjectId(req.body.user);
   const hotel = new ObjectId(req.body.hotel);
   const room = req.body.room;
@@ -208,6 +211,7 @@ exports.postTransaction = (req, res, next) => {
   const payment = req.body.payment;
   const status = req.body.status;
 
+  // Tạo transaction mới
   const transaction = new Transaction({
     user,
     hotel,
@@ -219,6 +223,7 @@ exports.postTransaction = (req, res, next) => {
     status,
   });
 
+  // Lưu vào database
   transaction
     .save()
     .then((result) => {
@@ -230,7 +235,10 @@ exports.postTransaction = (req, res, next) => {
 };
 
 exports.getTransaction = (req, res, next) => {
+  // Lấy id của người dùng hiện tại
   const userId = new ObjectId(req.params.userId);
+
+  // Tìm các transaction của người dùng hiện tại
   Transaction.find({ user: userId })
     .populate("hotel")
     .exec()

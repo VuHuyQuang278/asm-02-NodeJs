@@ -36,7 +36,7 @@ const FormSearch = () => {
   ]);
   const [open, setOpen] = useState(false);
 
-  const CityChangeHandle = (event) => {
+  const cityChangeHandle = (event) => {
     setCity(event.target.value);
   };
 
@@ -75,7 +75,7 @@ const FormSearch = () => {
           type="text"
           placeholder="Where are you going?"
           value={city}
-          onChange={CityChangeHandle}
+          onChange={cityChangeHandle}
         />
       </div>
       <div className={style["input-container"]}>

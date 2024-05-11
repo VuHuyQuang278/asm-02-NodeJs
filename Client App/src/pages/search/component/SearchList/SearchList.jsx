@@ -5,7 +5,6 @@
 import SearchListItem from "./SearchListItem";
 
 const SearchList = ({ hotelData }) => {
-  console.log(hotelData);
   return (
     <div>
       {/* Kiểm tra có dữ liệu không nếu có thì hiển thị  */}

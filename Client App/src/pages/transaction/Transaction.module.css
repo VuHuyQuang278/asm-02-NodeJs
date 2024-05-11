@@ -50,3 +50,33 @@ tr {
 .payment {
   text-transform: capitalize;
 }
+
+.booked {
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #2b8a3e;
+  background-color: #ffa8a8;
+  width: auto;
+  text-align: center;
+}
+
+.checkin {
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #2b8a3e;
+  background-color: #69db7c;
+  width: auto;
+  text-align: center;
+}
+
+.checkout {
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #2b8a3e;
+  background-color: #ced4da;
+  width: auto;
+  text-align: center;
+}
