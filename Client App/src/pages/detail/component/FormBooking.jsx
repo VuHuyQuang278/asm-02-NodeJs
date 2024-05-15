@@ -9,7 +9,7 @@ import "./style.css";
 // import "react-date-range/dist/styles.css";
 // import "react-date-range/dist/theme/default.css";
 
-import { format } from "date-fns";
+import { formatISO } from "date-fns";
 
 const FormBooking = (props) => {
   // Lấy state từ reduc store
@@ -212,8 +212,8 @@ const FormBooking = (props) => {
       user: user._id,
       hotel: hotelId,
       room: rooms,
-      dateStart: format(date.startDate, "dd/MM/yyyy"),
-      dateEnd: format(date.endDate, "dd/MM/yyyy"),
+      dateStart: formatISO(date.startDate),
+      dateEnd: formatISO(date.endDate),
       price: totalPrice,
       payment: selectPayMethod,
       status: "Booked",

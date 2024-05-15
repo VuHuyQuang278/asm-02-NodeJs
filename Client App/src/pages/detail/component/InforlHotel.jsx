@@ -23,7 +23,9 @@ const InforHotel = (props) => {
         </p>
       </div>
       <div>
-        <button className={style.btn}>Reserve or Book Now!</button>
+        <button onClick={props.onClick} className={style.btn}>
+          Reserve or Book Now!
+        </button>
       </div>
     </div>
   );

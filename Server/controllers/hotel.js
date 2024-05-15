@@ -154,6 +154,7 @@ exports.postSearchHotel = (req, res, next) => {
             });
           });
 
+          // Kiểm tra khách sạn có còn phòng trong khoảng thời gian tìm kiếm
           transactions.forEach((transaction) => {
             let dateStart1 = new Date(transaction.dateStart);
             let dateEnd1 = new Date(transaction.dateEnd);
@@ -162,10 +163,18 @@ exports.postSearchHotel = (req, res, next) => {
               for (let j = 0; j < hotels[i].rooms.length; j++) {
                 hotels[i].rooms[j].roomNumbers.forEach((roomNumber) => {
                   transaction.room.forEach((room) => {
+                    // Gán danh sách phòng trống
+                    let arr = hotels[i].rooms[j].roomNumbers;
+                    // Kiểm tra số phòng có bị trùng trong khoảng thời gian tìm kiếm không
                     if (
-                      (room === roomNumber && dateEnd1 < dateStart2) ||
-                      dateStart1 > dateEnd2
+                      +room === roomNumber &&
+                      (dateEnd1 > dateStart2 || dateStart1 < dateEnd2)
                     ) {
+                      // Nếu đúng thì bỏ phỏng đó ra khỏi danh sách
+                      arr.filter((roomNum) => roomNum !== roomNumber);
+                    }
+                    // Nếu dánh sách phòng trống rỗng thì loại bỏ khách sạn khỏi kết quả tìm kiếm
+                    if (arr.length === 0) {
                       hotels.splice(i, 1);
                     }
                   });
@@ -205,8 +214,8 @@ exports.postTransaction = (req, res, next) => {
   const user = new ObjectId(req.body.user);
   const hotel = new ObjectId(req.body.hotel);
   const room = req.body.room;
-  const dateStart = req.body.dateStart;
-  const dateEnd = req.body.dateEnd;
+  const dateStart = new Date(req.body.dateStart);
+  const dateEnd = new Date(req.body.dateEnd);
   const price = req.body.price;
   const payment = req.body.payment;
   const status = req.body.status;

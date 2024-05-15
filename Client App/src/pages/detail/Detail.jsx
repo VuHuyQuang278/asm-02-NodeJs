@@ -73,6 +73,7 @@ const Detail = () => {
             distance={hotelData.distance}
             price={hotelData.cheapestPrice}
             hotelId={hotelId}
+            onClick={openForm}
           />
           <ImgHotel photos={hotelData.photos} />
           <Description
